@@ -1197,13 +1197,18 @@ body {
         overflow: auto;
         min-height: 100dvh; /* Use dynamic viewport height */
         height: auto;
+        align-items: flex-start; /* Align to top instead of center */
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
 
     /* Container spacing */
     .maze-container {
         margin: 0.5rem;
         padding: 0;
-        min-height: calc(100dvh - 1rem);
+        height: auto; /* Fit content instead of forcing full height */
+        min-height: auto;
+        max-height: calc(100dvh - 1rem); /* Prevent overflow */
     }
 
     /* UI Bar - make more compact */
