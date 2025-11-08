@@ -4,20 +4,34 @@ A modern, responsive personal portfolio website built with HTML, CSS, and JavaSc
 
 ## Features
 
+### Two Portfolio Versions
+- 🎮 **Interactive Maze Portfolio**: Explore portfolio through a fun maze game!
+- 📄 **Traditional Portfolio**: Classic, professional portfolio layout
+
+### Common Features
 - 🎨 **Modern Design**: Clean and professional UI with smooth animations
 - 📱 **Fully Responsive**: Works perfectly on all devices (mobile, tablet, desktop)
 - 🚀 **Performance Optimized**: Fast loading with optimized assets
 - ✨ **Interactive Elements**: Smooth scrolling, hover effects, and animations
 - 🎯 **Section Navigation**: Easy navigation between different sections
-- 📧 **Contact Form**: Built-in contact form (ready to connect to backend)
-- 💼 **Professional Sections**: 
+- 📧 **Contact Information**: Multiple ways to get in touch
+- 💼 **Professional Sections**:
   - Hero/Landing page
   - About me
   - Work experience with timeline
   - Education
   - Skills showcase
   - Featured projects
+  - References
   - Contact information
+
+### Maze Portfolio Features
+- 🕹️ **Interactive Gameplay**: Use arrow keys or click to navigate
+- 🏆 **Goal-based Exploration**: Collect all sections and reach the trophy
+- 📱 **Touch-friendly**: Optimized for mobile devices
+- 🎨 **Animated Character**: Custom character with smooth animations
+- 💡 **Tooltips**: Hover over hotspots to see section names
+- ✅ **Progress Tracking**: See how many sections you've discovered
 
 ## Technologies Used
 
@@ -67,21 +81,27 @@ You can deploy this website for free using:
 
 ### 1. Personal Information
 
-Edit `index.html` to update:
-- Your name in the hero section
-- Contact information (email, phone, location)
-- Social media links
-- Work experience details
-- Education information
-- Project descriptions
+**Recommended Approach (Centralized)**:
+Edit `data/portfolio.json` to update all content in one place:
+- Personal information (name, title, contact)
+- About section
+- Work experience
+- Education
+- Skills
+- Projects
+- References
+
+**Alternative Approach** (if not using dynamic loading):
+- Edit `index.html` for traditional portfolio
+- Edit `maze.html` for maze portfolio
+- Keep `data/portfolio.json` in sync for reference
 
 ### 2. Colors and Styling
 
-Edit `styles.css` to change:
+Edit `css/shared.css` to change colors for **both** portfolios:
 - Primary colors (defined in `:root` CSS variables)
-- Font families
-- Spacing and layout
-- Animations
+- Hotspot colors (for maze portfolio)
+- Transition speeds
 
 ```css
 :root {
@@ -92,12 +112,24 @@ Edit `styles.css` to change:
 }
 ```
 
+For portfolio-specific styling:
+- Edit `css/styles.css` for traditional portfolio
+- Edit `css/maze.css` for maze portfolio
+
 ### 3. Add Your CV
 
-Replace `Hoang_Van_An_CV_0210.pdf` with your own CV file, or update the link in `index.html`:
+1. Place your CV in `assets/documents/`
+2. Update the filename in both HTML files:
+   - `index.html`: Line ~50
+   - `maze.html`: Line ~460
+3. Update `data/portfolio.json` with the new path:
 
-```html
-<a href="your-cv-filename.pdf" download class="btn btn-secondary">Download CV</a>
+```json
+{
+  "personal": {
+    "cv": "assets/documents/your-cv-filename.pdf"
+  }
+}
 ```
 
 ### 4. Update Social Links
@@ -138,15 +170,32 @@ The contact form currently shows an alert. To make it functional:
 
 ## File Structure
 
+**Updated: November 9, 2024** - Project has been refactored for better organization and maintainability.
+
 ```
-personal-website/
-│
-├── index.html              # Main HTML file
-├── styles.css              # All styling
-├── script.js               # JavaScript functionality
+personal-web/
+├── assets/
+│   ├── images/              # Image assets
+│   │   └── character.png   # Maze character sprite
+│   └── documents/          # Documents
+│       └── Hoang_Van_An_CV_0210.pdf  # CV/Resume
+├── css/
+│   ├── shared.css          # Shared CSS variables and utilities
+│   ├── styles.css          # Traditional portfolio styles
+│   └── maze.css            # Maze portfolio styles
+├── js/
+│   ├── script.js           # Traditional portfolio JavaScript
+│   └── maze.js             # Maze portfolio JavaScript
+├── data/
+│   └── portfolio.json      # Centralized portfolio data (single source of truth)
+├── index.html              # Traditional portfolio page
+├── maze.html               # Interactive maze portfolio page
 ├── README.md               # This file
-└── Hoang_Van_An_CV_0210.pdf  # Your CV (update with yours)
+├── REFACTORING.md          # Refactoring documentation
+└── UPDATES.md              # Update history
 ```
+
+See [REFACTORING.md](REFACTORING.md) for detailed documentation about the new structure.
 
 ## Browser Support
 
@@ -175,12 +224,32 @@ To add a profile picture or project images:
 <img src="images/profile.jpg" alt="Your Name">
 ```
 
+## Recent Updates
+
+### November 9, 2024 - Major Refactoring
+- ✅ Reorganized project into proper folder structure
+- ✅ Centralized portfolio data in `portfolio.json`
+- ✅ Created shared CSS variables for consistency
+- ✅ Updated character to custom PNG image
+- ✅ Synced content between maze and traditional versions
+- ✅ Improved maintainability and scalability
+
+### Previous Updates
+- ✅ Added interactive maze portfolio
+- ✅ Implemented end goal system with trophy
+- ✅ Fixed responsive design issues
+- ✅ Added tooltips for maze hotspots
+
 ## Future Enhancements
 
-- [ ] Add a blog section
-- [ ] Integrate with a CMS
+- [ ] Implement dynamic data loading from portfolio.json
+- [ ] Add build process (Webpack/Vite)
 - [ ] Add dark mode toggle
-- [ ] Add more animations
+- [ ] Implement CSS preprocessing (SCSS)
+- [ ] Add automated testing
+- [ ] Set up CI/CD pipeline
+- [ ] Add blog section
+- [ ] Integrate with a CMS
 - [ ] Add testimonials section
 - [ ] Add multilingual support
 

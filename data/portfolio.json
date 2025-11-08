@@ -1,0 +1,176 @@
+{
+  "personal": {
+    "name": "Van-An Hoang",
+    "title": "AI Research Engineer & Machine Learning Specialist",
+    "description": "Passionate about Deep Learning, Computer Vision, and Generative AI",
+    "email": "jimmyhan2610@gmail.com",
+    "phone": "+61 431 061 203",
+    "location": "Sydney, NSW, Australia",
+    "linkedin": "https://linkedin.com/in/van-an-hoang",
+    "github": "https://github.com/EthAnHoangg",
+    "cv": "assets/documents/Hoang_Van_An_CV_0210.pdf"
+  },
+  "about": {
+    "paragraphs": [
+      "I'm an AI Research Engineer currently pursuing a Master's in Artificial Intelligence at the University of Technology Sydney. With over 2 years of professional experience in machine learning and computer vision, I specialize in deploying production-ready AI systems that solve real-world problems.",
+      "My expertise spans deep generative models, computer vision, and MLOps. I've successfully deployed semantic search engines, developed automated review systems using Vision-Language Models, and contributed to cutting-edge research in diffusion models. I'm passionate about bridging the gap between research and production, creating AI solutions that are both technically sound and commercially viable."
+    ],
+    "highlights": [
+      {
+        "icon": "fas fa-brain",
+        "title": "AI Research",
+        "description": "Deep Learning & Generative Models"
+      },
+      {
+        "icon": "fas fa-rocket",
+        "title": "MLOps",
+        "description": "Production-ready AI Systems"
+      },
+      {
+        "icon": "fas fa-eye",
+        "title": "Computer Vision",
+        "description": "Multi-modal AI & Visual Understanding"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "title": "Junior/Middle AI Research Engineer",
+      "company": "Pixta - Largest marketplace online site of stock media in Asia",
+      "location": "Hanoi, Vietnam",
+      "period": "Oct 2023 - Aug 2024",
+      "responsibilities": [
+        "<strong>AutoReview Project:</strong> Engineered unified MLOps pipeline using ClearML, integrating AWS S3, DynamoDB, MySQL, and BigQuery for streamlined data processing",
+        "Evaluated and integrated multiple Vision-Language Models (MiniCPM-V 2.6, Qwen2-VL, Gemini 2.0/2.5) for abstract image understanding and trademark recognition",
+        "Developed novel image processing algorithm achieving 85% recall for NG cases and 92% recall for accepted cases, saving ~$1,500/month in manual review costs",
+        "<strong>AI Search Project:</strong> Architected semantic search backend using OpenSearch and Weaviate with HNSW-PQ indexing, powering public \"AI Search\" feature on pixta.jp",
+        "Achieved 90% search result acceptance rate from internal labeling team through vision-language fusion approach",
+        "Deployed autoscaling, asynchronous inference endpoints on AWS SageMaker with robust CI/CD pipeline",
+        "Integrated multi-modal models (RAM++, Tag2Text, Osprey) for rich semantic descriptions combining lexical tags with pixel-level visual understanding",
+        "Built multi-stage detection pipeline combining COCO-baseline models with YOLO-World for open-vocabulary object detection"
+      ]
+    },
+    {
+      "title": "Research Assistant",
+      "company": "DSLab - BKAI International Research Center",
+      "location": "Hanoi, Vietnam",
+      "period": "Nov 2022 - July 2024",
+      "responsibilities": [
+        "Researched efficient training methods for diffusion models with SNR re-weighting and novel resampling strategies",
+        "Developed adaptive timestep resampling distribution and employed reversed Signal-to-Noise Ratio in loss function",
+        "Achieved acceleration in convergence speed and improved FID/IS metrics in empirical results",
+        "Conducted research on Deep Generative Models: Autoregressive Models, Flow Models, GANs, and Diffusion Probabilistic Models",
+        "Authored technical blog post on InstaFlow (one-step diffusion model) published on Viblo, Vietnam's largest tech-sharing platform"
+      ]
+    },
+    {
+      "title": "AI Engineer Intern",
+      "company": "Viettel Aerospace Institute",
+      "location": "Hanoi, Vietnam",
+      "period": "May 2023 - Sep 2023",
+      "responsibilities": [
+        "Redesigned body-face joint model (BFJDet) with new post-hoc processing for landmark detection in PyTorch",
+        "Developed evaluation code using MSE and RMSE metrics for landmark detection performance",
+        "Ranked 27/165 in Viettel Programming Challenge - nationwide algorithm programming competition",
+        "Researched Neural Radiance Fields (NeRF) and its applications in view synthesis"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Artificial Intelligence",
+      "institution": "University of Technology Sydney",
+      "institutionShort": "UTS",
+      "location": "Sydney, NSW, Australia",
+      "period": "Aug 2025 - Present",
+      "gpa": null,
+      "details": [
+        "<strong>UTS Academic Excellence International Scholarship</strong> - Awarded for outstanding academic achievement",
+        "Focusing on advanced machine learning, deep learning architectures, and cutting-edge AI research in generative models and computer vision"
+      ]
+    },
+    {
+      "degree": "Bachelor in Data Science & AI",
+      "institution": "Hanoi University of Science and Technology",
+      "institutionShort": "HUST",
+      "location": "Hanoi, Vietnam",
+      "period": "Oct 2020 - Oct 2024",
+      "gpa": "3.66/4.0",
+      "details": [
+        "Excellent Scholarship - Type A (top 5%) - GPA: 3.93",
+        "The Scholarship Program Sponsored by Electricity of Vietnam (EVN)",
+        "Machine Learning Teaching Assistant (April - June 2024)"
+      ]
+    }
+  ],
+  "skills": {
+    "Programming Languages": ["Python", "C++", "Java", "SQL"],
+    "Deep Learning & ML": ["PyTorch", "PyTorch Lightning", "TensorFlow", "Scikit-learn", "NumPy", "Pandas"],
+    "Computer Vision": ["Vision-Language Models", "Diffusion Models", "YOLO", "Object Detection", "Semantic Segmentation", "OpenCV", "Detectron2", "Albumentations", "ONNX", "Image Processing"],
+    "Generative AI": ["Stable Diffusion", "FLUX", "ComfyUI", "GANs", "Autoregressive Models", "Flow Models", "Diffusion Models"],
+    "MLOps & Cloud": ["AWS SageMaker", "AWS S3", "ClearML", "Docker", "CI/CD", "Git", "FastAPI"],
+    "Search & Data": ["OpenSearch", "ElasticSearch", "Weaviate", "MySQL", "DynamoDB", "BigQuery"],
+    "Data Visualization": ["Matplotlib", "Plotly", "Seaborn"],
+    "Languages": ["English - IELTS 7.5", "Vietnamese - Native"]
+  },
+  "projects": [
+    {
+      "title": "VisionCraft AI",
+      "icon": "fas fa-wand-magic-sparkles",
+      "description": "LLM-powered system for deep review, compliance checks, and market analysis of stock media. Features batch processing, SEO optimization, RAG chatbot, and integrated image generation capabilities (Style Transfer, Text-to-Image, Image-to-Image, Inpainting).",
+      "detailedPoints": [
+        "Developed Large Language Model (LLM)-powered system for comprehensive review and market analysis",
+        "Implemented batch processing functionality for efficient content handling and workflow automation",
+        "Integrated Image Generation capabilities including Style Transfer, Text-to-Image, Image-to-Image, and Inpainting",
+        "Built Retrieval-Augmented Generation (RAG) chatbot for intelligent content assistance",
+        "Significantly streamlined content preparation and compliance verification processes"
+      ],
+      "techStack": ["LLM", "RAG", "Image Generation", "SEO"],
+      "link": "https://github.com/EthAnHoangg"
+    },
+    {
+      "title": "Efficient Training Diffusion Models",
+      "icon": "fas fa-atom",
+      "description": "Research project on efficient training methods for diffusion models with SNR re-weighting and novel timestep resampling strategy. Achieved improved FID/IS metrics and accelerated convergence speed through adaptive distribution.",
+      "detailedPoints": [
+        "Resampled timestep with novel and more adaptive distribution",
+        "Employed reversed Signal-to-Noise Ratio in loss function",
+        "Achieved acceleration in convergence speed and improved FID/IS metrics",
+        "Detailed empirical results demonstrating effectiveness of the approach"
+      ],
+      "techStack": ["PyTorch", "Diffusion Models", "Deep Learning"],
+      "link": "https://github.com/EthAnHoangg"
+    },
+    {
+      "title": "Rain Removal Analysis",
+      "icon": "fas fa-cloud-rain",
+      "description": "Comprehensive analysis of different methods for rain removal task. Fine-tuned Gated Context Aggregation Network and benchmarked against DDPM, GAN, and Transweather using SSIM and PSNR metrics on raindrop-on-lens images.",
+      "detailedPoints": [
+        "Fine-tuned Gated Context Aggregation Network on the task of removing rain drops on lens when capturing landscapes",
+        "Benchmarked performance using SSIM and PSNR metrics",
+        "Compared results with other models including DDPM, GAN, and Transweather",
+        "Provided comprehensive analysis of traditional vs. deep learning approaches"
+      ],
+      "techStack": ["Computer Vision", "Image Processing", "PyTorch", "OpenCV", "GAN", "CNN", "DDPM", "Transweather"],
+      "link": "https://github.com/EthAnHoangg"
+    }
+  ],
+  "references": [
+    {
+      "name": "Quang-Khoat Than",
+      "title": "PhD in Computer Science - AI",
+      "organization": "Hanoi University of Science and Technology",
+      "email": "khoattq@soict.hust.edu.vn",
+      "relationship": "Academic Advisor and Professor",
+      "icon": "fas fa-user-graduate"
+    },
+    {
+      "name": "Thanh-Trung Tran",
+      "title": "AI Expert",
+      "organization": "PIXTA Vietnam",
+      "email": "trungtranthanh1990@gmail.com",
+      "relationship": "Former Manager and Technical Lead",
+      "icon": "fas fa-user-tie"
+    }
+  ]
+}
