@@ -1,0 +1,68 @@
+/* ===== Shared CSS Variables and Utilities ===== */
+/* This file contains common styles used across both traditional and maze portfolio pages */
+
+/* CSS Variables */
+:root {
+    /* Primary Colors */
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --accent-color: #3b82f6;
+
+    /* Text Colors */
+    --text-color: #1f2937;
+    --text-light: #6b7280;
+
+    /* Background Colors */
+    --bg-color: #f9fafb;
+    --white: #ffffff;
+    --dark: #111827;
+    --bg-light: #f9fafb;
+    --bg-dark: #111827;
+    --border-color: #e5e7eb;
+
+    /* Hotspot Colors (for maze) */
+    --hotspot-about: #8b5cf6;
+    --hotspot-experience: #ec4899;
+    --hotspot-education: #f59e0b;
+    --hotspot-skills: #10b981;
+    --hotspot-projects: #3b82f6;
+    --hotspot-references: #6366f1;
+    --hotspot-contact: #ef4444;
+
+    /* Shadows */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Common Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Font Awesome Icons - Ensure consistency */
+.fas, .fab {
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands';
+    font-weight: 900;
+}

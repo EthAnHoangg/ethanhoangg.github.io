@@ -195,10 +195,19 @@ body {
 
 .hero-buttons {
     display: flex;
+    flex-direction: column;
     gap: 20px;
     justify-content: center;
+    align-items: center;
     margin-bottom: 40px;
     animation: fadeInUp 1s ease 0.8s backwards;
+}
+
+.hero-buttons-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .btn {
@@ -230,7 +239,102 @@ body {
 .btn-secondary:hover {
     background: white;
     color: var(--primary-color);
+}
+
+.btn-accent {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+}
+
+.btn-accent:hover {
     transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(102, 126, 234, 0.5);
+}
+
+.btn-accent i {
+    margin-right: 8px;
+}
+
+/* Enhanced Maze Button */
+.btn-maze {
+    padding: 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 320px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.btn-maze::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+}
+
+.btn-maze i {
+    font-size: 1.8rem;
+    margin-right: 0;
+    margin-bottom: 0.3rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.btn-maze span {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-maze small {
+    font-size: 0.9rem;
+    opacity: 0.95;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.btn-maze:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 25px 50px -5px rgba(251, 191, 36, 0.6);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 15px 30px -5px rgba(251, 191, 36, 0.5),
+                    0 0 0 0 rgba(251, 191, 36, 0.4);
+    }
+    50% {
+        box-shadow: 0 15px 30px -5px rgba(251, 191, 36, 0.5),
+                    0 0 0 10px rgba(251, 191, 36, 0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
 }
 
 .social-links {
@@ -250,6 +354,7 @@ body {
     justify-content: center;
     color: white;
     font-size: 1.2rem;
+    text-decoration: none;
     transition: all 0.3s ease;
 }
 
@@ -903,6 +1008,20 @@ body {
     .hero-buttons {
         flex-direction: column;
         align-items: center;
+    }
+
+    .hero-buttons-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-maze {
+        min-width: 100%;
+        max-width: 320px;
+    }
+
+    .btn {
+        width: 100%;
     }
 
     .section-title {
