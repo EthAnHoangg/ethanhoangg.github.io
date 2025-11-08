@@ -614,8 +614,11 @@ function checkHotspot() {
             // All hotspots collected - show congratulations and highlight cells
             setTimeout(() => {
                 highlightSpecialCells();
-                showCongratulations();
-            }, 300);
+                // Show congratulations modal after highlight effect is visible
+                setTimeout(() => {
+                    showCongratulations();
+                }, 2000); // Delay to let highlight effect show first
+            }, 200);
         } else {
             // Not all hotspots collected - show instruction
             setTimeout(() => {
