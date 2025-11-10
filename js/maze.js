@@ -45,6 +45,11 @@ const HOTSPOTS = [
         description: 'Technologies and tools I work with'
     },
     {
+        row: 7, col: 3, type: 'blog', icon: '\uf781', discovered: false,
+        title: 'Blog & Writing',
+        description: 'Technical articles and research insights'
+    },
+    {
         row: 4, col: 9, type: 'projects', icon: '\uf542', discovered: false,
         title: 'Featured Projects',
         description: 'Explore my recent work and research'

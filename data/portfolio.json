@@ -8,7 +8,8 @@
     "location": "Sydney, NSW, Australia",
     "linkedin": "https://linkedin.com/in/van-an-hoang",
     "github": "https://github.com/EthAnHoangg",
-    "cv": "assets/documents/Hoang_Van_An_CV_0210.pdf"
+    "cv": "assets/documents/Hoang_Van_An_CV_0210.pdf",
+    "portrait": "assets/images/portrait.jpeg"
   },
   "about": {
     "paragraphs": [
@@ -113,6 +114,66 @@
     "Data Visualization": ["Matplotlib", "Plotly", "Seaborn"],
     "Languages": ["English - IELTS 7.5", "Vietnamese - Native"]
   },
+  "blog": [
+    {
+      "title": "InstaFlow: One Step to the Cloud with Diffusion",
+      "titleVietnamese": "InstaFlow: Một bước lên mây với Diffusion?",
+      "description": "Deep dive into InstaFlow, a breakthrough model that achieves high-quality text-to-image generation in just one step, built on Stable Diffusion. Explores rectified flow mechanisms, reflow techniques, and knowledge distillation for rapid image synthesis.",
+      "date": "October 20, 2023",
+      "readTime": "8 min read",
+      "platform": "Viblo",
+      "url": "https://viblo.asia/p/instaflow-mot-buoc-len-may-voi-diffusion-vlZL9oxZ4QK",
+      "tags": ["Diffusion Models", "Generative AI", "Deep Learning", "Computer Vision"],
+      "highlights": [
+        "Explains Rectified Flow mechanism for straightening probability trajectories",
+        "Details the Reflow technique for iterative refinement",
+        "Covers text-conditioned generation approaches",
+        "Analyzes knowledge distillation applications in diffusion models",
+        "Compares U-Net vs. Stacked U-Net architectures"
+      ],
+      "language": "Vietnamese",
+      "organization": "PIXTA Vietnam"
+    },
+    {
+      "title": "Simplex Method",
+      "titleVietnamese": "Phương pháp đơn hình",
+      "description": "Comprehensive tutorial on the Simplex Method for linear programming optimization. Covers the complete algorithm from problem setup to finding optimal solutions, with step-by-step worked examples including constraint conversion, tableau construction, pivoting operations, and solution interpretation.",
+      "date": "December 16, 2021",
+      "readTime": "15 min read",
+      "platform": "Personal Notes",
+      "url": "simplexmethod.html",
+      "tags": ["Linear Programming", "Optimization", "Operations Research", "Mathematics"],
+      "highlights": [
+        "Complete simplex algorithm with 8-step process",
+        "Converting inequalities to standard form with slack variables",
+        "Constructing and interpreting simplex tableaux",
+        "Identifying pivot elements and performing row operations",
+        "Real-world example: job scheduling optimization problem",
+        "Detailed mathematical explanations and quotient calculations"
+      ],
+      "language": "English/Vietnamese",
+      "organization": "Personal Study"
+    },
+    {
+      "title": "Marimo: A Modern Alternative to Jupyter Notebooks",
+      "titleVietnamese": "Doubling Productivity in AI Model Analysis",
+      "description": "Exploring Marimo's reactive notebook model and how it addresses Jupyter's challenges. This presentation shares my personal journey of switching to Marimo, which doubled my productivity in AI model analysis and significantly improved team collaboration through better reproducibility and interactivity.",
+      "date": "2024",
+      "readTime": "10 min read",
+      "platform": "GitHub",
+      "url": "https://github.com/EthAnHoangg/marimo-intro",
+      "tags": ["Python", "Data Science", "Productivity", "Tools"],
+      "highlights": [
+        "Marimo basics: Introduction to reactive notebook model",
+        "Solving Jupyter's challenges: Reproducibility, hidden state, and interactivity",
+        "Productivity boost: How switching doubled productivity in AI model analysis",
+        "Team collaboration: Improved workflow and sharing capabilities",
+        "Interactive demos: Live UI elements and dynamic data visualization"
+      ],
+      "language": "English",
+      "organization": "Company Seminar Presentation"
+    }
+  ],
   "projects": [
     {
       "title": "VisionCraft AI",
@@ -139,7 +200,7 @@
         "Detailed empirical results demonstrating effectiveness of the approach"
       ],
       "techStack": ["PyTorch", "Diffusion Models", "Deep Learning"],
-      "link": "https://github.com/EthAnHoangg"
+      "link": "https://github.com/HoangAnAIRS/exponential-SNR-diffusion"
     },
     {
       "title": "Rain Removal Analysis",
@@ -152,7 +213,8 @@
         "Provided comprehensive analysis of traditional vs. deep learning approaches"
       ],
       "techStack": ["Computer Vision", "Image Processing", "PyTorch", "OpenCV", "GAN", "CNN", "DDPM", "Transweather"],
-      "link": "https://github.com/EthAnHoangg"
+      "link": "https://drive.google.com/drive/folders/1zqu1nTZ7Yb06Lkm0utC-yvT6vVn9DRC9?usp=drive_link",
+      "duration": "Oct 2022 - Jan 2023"
     }
   ],
   "references": [
