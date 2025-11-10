@@ -45,7 +45,7 @@ const HOTSPOTS = [
         description: 'Technologies and tools I work with'
     },
     {
-        row: 7, col: 3, type: 'blog', icon: '\uf781', discovered: false,
+        row: 7, col: 5, type: 'blog', icon: '\uf781', discovered: false,
         title: 'Blog & Writing',
         description: 'Technical articles and research insights'
     },
@@ -60,7 +60,7 @@ const HOTSPOTS = [
         description: 'Professional recommendations'
     },
     {
-        row: 9, col: 4, type: 'contact', icon: '\uf0e0', discovered: false,
+        row: 8, col: 3, type: 'contact', icon: '\uf0e0', discovered: false,
         title: 'Get In Touch',
         description: 'Contact information and social links'
     },

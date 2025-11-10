@@ -215,6 +215,20 @@
       "techStack": ["Computer Vision", "Image Processing", "PyTorch", "OpenCV", "GAN", "CNN", "DDPM", "Transweather"],
       "link": "https://drive.google.com/drive/folders/1zqu1nTZ7Yb06Lkm0utC-yvT6vVn9DRC9?usp=drive_link",
       "duration": "Oct 2022 - Jan 2023"
+    },
+    {
+      "title": "2048 Game",
+      "icon": "fas fa-gamepad",
+      "description": "Interactive 2048 puzzle game featuring AI opponent powered by Minimax algorithm. Developed comprehensive UI design and implemented AI game-playing logic enabling the AI to play and win the game autonomously.",
+      "detailedPoints": [
+        "Designed and implemented responsive, intuitive user interface for enhanced gaming experience",
+        "Developed Minimax algorithm with alpha-beta pruning for intelligent AI opponent",
+        "Implemented AI decision-making logic enabling autonomous gameplay and game winning strategies",
+        "Optimized algorithm performance for smooth real-time game interactions",
+        "Created engaging visual design with interactive controls and game state visualization"
+      ],
+      "techStack": ["Game Development", "Minimax Algorithm", "AI Algorithm", "UI/UX Design", "Interactive UI"],
+      "link": "https://github.com/hlongng2002241/2048"
     }
   ],
   "references": [
