@@ -75,6 +75,24 @@ const END_GOAL = {
     description: 'Complete your journey'
 };
 
+// ===== Black Holes (Teleportation Points) =====
+const BLACK_HOLES = [
+    {
+        row: 4,
+        col: 1,
+        linkedTo: { row: 6, col: 6 },
+        icon: '\uf0c1', // Link icon
+        name: 'Portal A'
+    },
+    {
+        row: 6,
+        col: 6,
+        linkedTo: { row: 4, col: 1 },
+        icon: '\uf0c1', // Link icon
+        name: 'Portal B'
+    }
+];
+
 // ===== Highlight Cells (shown when reaching end goal with all hotspots) =====
 const HIGHLIGHT_CELLS = [
     { row: 1, col: 1 }, { row: 1, col: 3 },
@@ -255,6 +273,26 @@ function generateMaze() {
                 if (row === END_GOAL.row && col === END_GOAL.col) {
                     cell.classList.add('end-goal');
                     cell.dataset.icon = END_GOAL.icon;
+                }
+
+                // Check if this cell is a black hole
+                const blackHole = BLACK_HOLES.find(bh => bh.row === row && bh.col === col);
+                if (blackHole) {
+                    cell.classList.add('black-hole');
+                    cell.dataset.icon = blackHole.icon;
+                    
+                    // Add tooltip for black hole
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'hotspot-tooltip black-hole-tooltip';
+                    tooltip.innerHTML = `
+                        <div class="hotspot-tooltip-title">${blackHole.name}</div>
+                        <div class="hotspot-tooltip-description">Teleports to ${blackHole.linkedTo.row}, ${blackHole.linkedTo.col}</div>
+                    `;
+                    
+                    const tooltipPosition = getTooltipPosition(row, col);
+                    tooltip.classList.add(`position-${tooltipPosition}`);
+                    
+                    cell.appendChild(tooltip);
                 }
 
                 // Add click listener for path cells
@@ -464,6 +502,7 @@ function findPath(startRow, startCol, endRow, endCol) {
 
             if (closedSet.has(neighborKey)) continue;
 
+            // Cost is 1 for normal moves and teleports
             const tentativeGScore = gScore.get(currentKey) + 1;
 
             if (!openSet.find(n => `${n.row},${n.col}` === neighborKey)) {
@@ -472,7 +511,12 @@ function findPath(startRow, startCol, endRow, endCol) {
                 continue;
             }
 
-            cameFrom.set(neighborKey, current);
+            // Store the path with teleport information
+            cameFrom.set(neighborKey, { 
+                row: current.row, 
+                col: current.col,
+                isTeleport: neighbor.isTeleport 
+            });
             gScore.set(neighborKey, tentativeGScore);
             fScore.set(neighborKey, tentativeGScore + heuristic(neighbor.row, neighbor.col, endRow, endCol));
         }
@@ -505,6 +549,19 @@ function getNeighbors(row, col) {
         }
     }
 
+    // Check if current position is a black hole - add teleport destination as neighbor
+    const blackHole = BLACK_HOLES.find(bh => bh.row === row && bh.col === col);
+    if (blackHole) {
+        // Add the linked destination as a valid neighbor (with cost of 1 for teleportation)
+        if (isValidMove(blackHole.linkedTo.row, blackHole.linkedTo.col)) {
+            neighbors.push({ 
+                row: blackHole.linkedTo.row, 
+                col: blackHole.linkedTo.col,
+                isTeleport: true 
+            });
+        }
+    }
+
     return neighbors;
 }
 
@@ -516,14 +573,18 @@ function reconstructPath(cameFrom, current) {
     while (cameFrom.has(currentKey)) {
         const prev = cameFrom.get(currentKey);
         currentKey = `${prev.row},${prev.col}`;
-        path.unshift(prev);
+        path.unshift({ 
+            row: prev.row, 
+            col: prev.col,
+            isTeleport: prev.isTeleport 
+        });
     }
 
     // Remove the starting position
     path.shift();
 
     // Add the final position
-    path.push(current);
+    path.push({ row: current.row, col: current.col, isTeleport: false });
 
     return path;
 }
@@ -542,7 +603,35 @@ async function processMovementQueue() {
     character.classList.add('moving');
 
     const nextPos = gameState.movementQueue.shift();
+    
+    // Check if this move is a teleportation
+    if (nextPos.isTeleport) {
+        // Find which black hole we're currently at
+        const blackHole = BLACK_HOLES.find(
+            bh => bh.row === gameState.characterPos.row && bh.col === gameState.characterPos.col
+        );
+        
+        if (blackHole) {
+            // Perform teleportation
+            await teleportThroughBlackHole(blackHole);
+            // After teleportation, continue with the rest of the path
+            processMovementQueue();
+            return;
+        }
+    }
+    
     await moveCharacter(nextPos.row, nextPos.col);
+    
+    // Check if we just stepped onto a black hole (for manual movement)
+    const blackHoleAtCurrent = BLACK_HOLES.find(
+        bh => bh.row === gameState.characterPos.row && bh.col === gameState.characterPos.col
+    );
+    
+    if (blackHoleAtCurrent && gameState.movementQueue.length > 0) {
+        // We're on a black hole and have more moves queued
+        // Teleport immediately and continue
+        await teleportThroughBlackHole(blackHoleAtCurrent);
+    }
 
     // Continue processing queue
     processMovementQueue();
@@ -593,6 +682,19 @@ function isValidMove(row, col) {
 
 // ===== Check for Hotspot =====
 function checkHotspot() {
+    // Check for black hole first
+    const blackHole = BLACK_HOLES.find(
+        bh => bh.row === gameState.characterPos.row && bh.col === gameState.characterPos.col
+    );
+
+    if (blackHole) {
+        // Trigger teleportation
+        setTimeout(() => {
+            teleportThroughBlackHole(blackHole);
+        }, 200);
+        return;
+    }
+
     const hotspot = HOTSPOTS.find(
         h => h.row === gameState.characterPos.row && h.col === gameState.characterPos.col
     );
@@ -644,6 +746,78 @@ function markHotspotAsDiscovered(hotspot) {
         // Add discovery celebration effect
         createDiscoveryEffect(cell);
     }
+}
+
+// ===== Teleport Through Black Hole =====
+async function teleportThroughBlackHole(blackHole) {
+    // Add teleporting animation to character
+    character.classList.add('teleporting');
+    
+    // Create visual effect at entrance
+    const entranceCell = mazeGrid.querySelector(
+        `.cell[data-row="${blackHole.row}"][data-col="${blackHole.col}"]`
+    );
+    if (entranceCell) {
+        createTeleportEffect(entranceCell, 'entrance');
+    }
+    
+    // Wait for animation
+    await new Promise(resolve => setTimeout(resolve, 600));
+    
+    // Move character to linked position
+    gameState.characterPos = { 
+        row: blackHole.linkedTo.row, 
+        col: blackHole.linkedTo.col 
+    };
+    positionCharacter();
+    
+    // Create visual effect at exit
+    const exitCell = mazeGrid.querySelector(
+        `.cell[data-row="${blackHole.linkedTo.row}"][data-col="${blackHole.linkedTo.col}"]`
+    );
+    if (exitCell) {
+        createTeleportEffect(exitCell, 'exit');
+    }
+    
+    // Remove teleporting class
+    setTimeout(() => {
+        character.classList.remove('teleporting');
+    }, 300);
+}
+
+// ===== Create Teleport Effect =====
+function createTeleportEffect(cell, type) {
+    const rect = cell.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const particleCount = DEVICE.isMobile ? 12 : 20;
+    const colors = type === 'entrance' ? 
+        ['#667eea', '#764ba2', '#9333ea'] : 
+        ['#10b981', '#059669', '#34d399'];
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'teleport-particle';
+        
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const velocity = type === 'entrance' ? 80 : 120;
+        const distance = type === 'entrance' ? 0 : velocity;
+        
+        particle.style.left = `${centerX}px`;
+        particle.style.top = `${centerY}px`;
+        particle.style.background = colors[i % colors.length];
+        particle.style.setProperty('--tx', `${Math.cos(angle) * (type === 'entrance' ? -distance : distance)}px`);
+        particle.style.setProperty('--ty', `${Math.sin(angle) * (type === 'entrance' ? -distance : distance)}px`);
+        
+        document.body.appendChild(particle);
+
+        setTimeout(() => particle.remove(), 1000);
+    }
+    
+    // Add pulsing effect to cell
+    cell.classList.add('teleport-pulse');
+    setTimeout(() => cell.classList.remove('teleport-pulse'), 1000);
 }
 
 // ===== Create Discovery Effect =====

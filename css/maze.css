@@ -467,6 +467,97 @@ body {
     }
 }
 
+/* ===== Black Hole Cells ===== */
+.cell.black-hole {
+    position: relative;
+    animation: blackHolePulse 3s ease-in-out infinite;
+    overflow: visible;
+    z-index: 10;
+}
+
+.cell.black-hole::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #4c1d95, #2e1065, #000000);
+    z-index: 1;
+    box-shadow: 
+        0 0 20px rgba(76, 29, 149, 0.6),
+        0 0 40px rgba(76, 29, 149, 0.4),
+        inset 0 0 20px rgba(147, 51, 234, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cell.black-hole:hover::before {
+    inset: 6px;
+    box-shadow: 
+        0 0 30px rgba(76, 29, 149, 0.8),
+        0 0 60px rgba(76, 29, 149, 0.6),
+        inset 0 0 25px rgba(147, 51, 234, 0.4),
+        0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.cell.black-hole::after {
+    content: attr(data-icon);
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c4b5fd;
+    font-size: 1.2rem;
+    z-index: 2;
+    filter: drop-shadow(0 0 8px rgba(196, 181, 253, 0.8));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: blackHolePulseIcon 2s ease-in-out infinite;
+}
+
+.cell.black-hole:hover::after {
+    transform: scale(1.2) rotate(180deg);
+    color: #e9d5ff;
+}
+
+@keyframes blackHolePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes blackHolePulseIcon {
+    0%, 100% {
+        filter: drop-shadow(0 0 8px rgba(196, 181, 253, 0.8));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(196, 181, 253, 1));
+    }
+}
+
+.cell.teleport-pulse {
+    animation: teleportPulse 0.6s ease-out;
+}
+
+@keyframes teleportPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 /* ===== Hotspot Tooltip ===== */
 .hotspot-tooltip {
     position: absolute;
@@ -572,6 +663,64 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
+/* ===== Black Hole Tooltip ===== */
+.black-hole-tooltip {
+    background: linear-gradient(135deg, rgba(76, 29, 149, 0.98), rgba(46, 16, 101, 0.98));
+    border: 2px solid rgba(147, 51, 234, 0.5);
+    box-shadow: 
+        0 10px 30px rgba(76, 29, 149, 0.4),
+        0 0 20px rgba(147, 51, 234, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.black-hole-tooltip::after {
+    border-top-color: rgba(76, 29, 149, 0.98);
+}
+
+.black-hole-tooltip.position-bottom::after {
+    border-top-color: transparent;
+    border-bottom-color: rgba(76, 29, 149, 0.98);
+}
+
+.black-hole-tooltip.position-left::after {
+    border-top-color: transparent;
+    border-left-color: rgba(76, 29, 149, 0.98);
+}
+
+.black-hole-tooltip.position-right::after {
+    border-top-color: transparent;
+    border-right-color: rgba(76, 29, 149, 0.98);
+}
+
+.black-hole-tooltip .hotspot-tooltip-title {
+    color: #e9d5ff;
+    text-shadow: 0 0 10px rgba(233, 213, 255, 0.5);
+}
+
+.black-hole-tooltip .hotspot-tooltip-description {
+    color: #c4b5fd;
+}
+
+.cell.black-hole:hover .hotspot-tooltip {
+    opacity: 1;
+}
+
+.cell.black-hole:hover .hotspot-tooltip.position-top {
+    transform: translateX(-50%) translateY(-12px);
+}
+
+.cell.black-hole:hover .hotspot-tooltip.position-bottom {
+    transform: translateX(-50%) translateY(12px);
+}
+
+.cell.black-hole:hover .hotspot-tooltip.position-right {
+    transform: translateY(-50%) translateX(12px);
+}
+
+.cell.black-hole:hover .hotspot-tooltip.position-left {
+    transform: translateY(-50%) translateX(-12px);
+}
+
 /* ===== Character ===== */
 .character {
     position: absolute;
@@ -611,6 +760,62 @@ body {
 
 .character.moving img {
     animation: characterMove 0.4s ease-in-out infinite;
+}
+
+.character.teleporting {
+    animation: teleportSpin 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.character.teleporting img {
+    animation: teleportFade 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes teleportSpin {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.3) rotate(360deg);
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1) rotate(720deg);
+        opacity: 1;
+    }
+}
+
+@keyframes teleportFade {
+    0%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.4));
+    }
+    50% {
+        opacity: 0;
+        filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.8));
+    }
+}
+
+/* ===== Teleport Particles ===== */
+.teleport-particle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    animation: teleportParticleMove 1s ease-out forwards;
+}
+
+@keyframes teleportParticleMove {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
 }
 
 /* ===== Mini-map ===== */
@@ -1480,6 +1685,14 @@ body {
     /* Hotspot icon - scale down for smaller cells */
     .cell.hotspot::after {
         font-size: 0.8rem; /* Much smaller icon for mobile */
+    }
+
+    .cell.black-hole::before {
+        inset: 4px; /* Match hotspot size for mobile */
+    }
+
+    .cell.black-hole::after {
+        font-size: 0.8rem; /* Match hotspot icon size for mobile */
     }
 
     /* End goal sizing for mobile */
