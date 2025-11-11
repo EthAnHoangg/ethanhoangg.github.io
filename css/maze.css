@@ -800,7 +800,6 @@ body {
 
 .cell.hotspot {
     position: relative;
-    animation: hotspotPulse 2s ease-in-out infinite;
     overflow: visible;
     z-index: 10;
 }
@@ -817,6 +816,7 @@ body {
     z-index: 1;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(255, 255, 255, 0.8);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: hotspotPulse 2s ease-in-out infinite;
 }
 
 .cell.hotspot:hover::before {
@@ -870,7 +870,6 @@ body {
 /* ===== End Goal Cell ===== */
 .cell.end-goal {
     position: relative;
-    animation: endGoalPulse 2s ease-in-out infinite;
     overflow: visible;
     z-index: 10;
 }
@@ -884,6 +883,7 @@ body {
     z-index: 1;
     box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4), 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 20px rgba(251, 191, 36, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: endGoalPulse 2s ease-in-out infinite;
 }
 
 .cell.end-goal:hover::before {
@@ -923,7 +923,6 @@ body {
 /* ===== Black Hole Cells ===== */
 .cell.black-hole {
     position: relative;
-    animation: blackHolePulse 3s ease-in-out infinite;
     overflow: visible;
     z-index: 10;
 }
@@ -935,12 +934,13 @@ body {
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #4c1d95, #2e1065, #000000);
     z-index: 1;
-    box-shadow: 
+    box-shadow:
         0 0 20px rgba(76, 29, 149, 0.6),
         0 0 40px rgba(76, 29, 149, 0.4),
         inset 0 0 20px rgba(147, 51, 234, 0.3),
         0 4px 12px rgba(0, 0, 0, 0.5);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: blackHolePulse 3s ease-in-out infinite;
 }
 
 .cell.black-hole:hover::before {
