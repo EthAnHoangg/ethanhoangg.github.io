@@ -1,4 +1,4 @@
-import { CONFIG, MAZE_LAYOUT, HOTSPOTS, END_GOAL, BLACK_HOLES, HIGHLIGHT_CELLS, tutorialSteps } from './constants.js';
+import { CONFIG, MAZE_LAYOUT, HOTSPOTS, END_GOAL, BLACK_HOLES, HIGHLIGHT_CELLS, tutorialSteps, OPTIMAL_STEPS } from './constants.js';
 import { findPath as findPathAStar } from './pathfinding.js';
 import { initTutorial } from './tutorial.js';
 
@@ -744,30 +744,55 @@ function closeModal() {
 
 // ===== Show Congratulations =====
 function showCongratulations() {
+    const totalSteps = gameState.stepCount;
+    const optimal = OPTIMAL_STEPS;
+    const efficiency = Math.max(0, Math.min(100, Math.round((optimal / totalSteps) * 100)));
+    const isPerfect = totalSteps === optimal;
+
     const congratsHTML = `
-        <div class="modal-header">
-            <i class="fas fa-trophy section-icon" style="color: #fbbf24; font-size: 3rem;"></i>
-            <h2>Journey Complete!</h2>
+        <div class="modal-header" style="border-bottom: none; padding-bottom: 0; justify-content: center;">
+            <i class="fas fa-trophy section-icon" style="color: #fbbf24; font-size: 3.5rem; margin: 0;"></i>
         </div>
-        <div class="modal-text" style="text-align: center;">
-            <p style="font-size: 1.3rem; color: var(--text-color); margin: 2rem 0; font-weight: 600;">
-                🎉 Congratulations! You've successfully completed the maze! 🎉
+        <div class="modal-text" style="text-align: center; padding-top: 0;">
+            <h2 style="font-size: 2rem; color: var(--text-color); margin: 1rem 0 0.5rem 0; font-weight: 700;">
+                Journey Complete!
+            </h2>
+            <p style="font-size: 1.05rem; color: var(--text-light); margin-bottom: 2rem;">
+                🎉 You've conquered the maze and discovered all ${HOTSPOTS.length} sections!
             </p>
-            <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 1rem;">
-                You discovered all <strong>${HOTSPOTS.length} portfolio sections</strong> and reached the finish line!
-            </p>
-            <p style="margin-bottom: 2rem; color: var(--text-color);">
-                Thank you for taking this interactive journey through my work. I hope you enjoyed exploring my portfolio in this unique way!
-            </p>
-            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
-                <p style="margin: 0; color: var(--text-color); font-size: 0.95rem;">
-                    Want to learn more or get in touch?
-                </p>
+            
+            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; border: 2px solid #bae6fd;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-bottom: ${isPerfect ? '1rem' : '0'};">
+                    <div>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.25rem; font-weight: 600;">Your Steps</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: var(--primary-color);">${totalSteps}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.25rem; font-weight: 600;">Optimal</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: #10b981;">${optimal}</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light); margin-bottom: 0.25rem; font-weight: 600;">Efficiency</div>
+                        <div style="font-size: 2rem; font-weight: 700; color: ${efficiency >= 100 ? '#10b981' : efficiency >= 80 ? '#f59e0b' : '#ef4444'};">${efficiency}%</div>
+                    </div>
+                </div>
+                ${isPerfect ? `
+                    <div style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.75rem 1rem; border-radius: 10px; font-weight: 600; font-size: 0.95rem;">
+                        <i class="fas fa-star"></i> Perfect Run! You found the optimal path!
+                    </div>
+                ` : ''}
             </div>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="index.html" class="start-btn">View Traditional Version</a>
-                <a href="Hoang_Van_An_CV_0210.pdf" download class="start-btn" style="background: linear-gradient(135deg, #10b981, #059669); text-decoration: none;">
-                    Download My CV
+
+            <p style="color: var(--text-light); margin-bottom: 1.5rem; font-size: 0.95rem;">
+                Thank you for exploring my portfolio in this unique way!
+            </p>
+            
+            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                <a href="index.html" class="start-btn" style="font-size: 0.95rem; padding: 0.75rem 1.5rem;">
+                    <i class="fas fa-home"></i> Traditional View
+                </a>
+                <a href="Hoang_Van_An_CV_0210.pdf" download class="start-btn" style="background: linear-gradient(135deg, #10b981, #059669); text-decoration: none; font-size: 0.95rem; padding: 0.75rem 1.5rem;">
+                    <i class="fas fa-download"></i> Download CV
                 </a>
             </div>
         </div>

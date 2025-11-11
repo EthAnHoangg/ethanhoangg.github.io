@@ -42,6 +42,9 @@ export const END_GOAL = {
     description: 'Complete your journey'
 };
 
+// Known optimal solution steps for this maze
+export const OPTIMAL_STEPS = 34;
+
 export const BLACK_HOLES = [
     { row: 3, col: 7, linkedTo: { row: 6, col: 6 }, icon: '\uf0c1', name: 'Portal A' },
     { row: 6, col: 6, linkedTo: { row: 3, col: 7 }, icon: '\uf0c1', name: 'Portal B' }
