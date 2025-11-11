@@ -62,11 +62,47 @@ export const HIGHLIGHT_CELLS = [
 ];
 
 export const tutorialSteps = [
-    { step: 1, title: 'Welcome to the Maze!', description: 'Click on adjacent cells (up, down, left, right) to move your character one step at a time.', tip: 'Use Arrow Keys or WASD on desktop!', highlightElement: '#character', calloutPosition: 'center' },
-    { step: 2, title: 'AI Pathfinding Assistant', description: 'Toggle the AI button to enable automatic pathfinding. When enabled, click anywhere and your character finds the best route!', tip: 'Manual mode is more challenging!', highlightElement: '#ai-toggle-btn', calloutPosition: 'left' },
-    { step: 3, title: 'Discover Hotspots', description: 'Navigate to colored markers throughout the maze to discover portfolio sections. Each reveals experience, skills, projects, and more!', tip: 'Track progress at the top - collect all 8!', highlightElement: '.cell.hotspot', calloutPosition: 'right' },
-    { step: 4, title: 'Portal Shortcuts', description: 'Find purple portals that teleport you instantly between connected locations. These shortcuts help navigate faster!', tip: 'Portals work both ways and count as 1 step!', highlightElement: '.cell.black-hole', calloutPosition: 'right' },
-    { step: 5, title: 'Complete Your Journey', description: 'After collecting all 8 sections, navigate to the golden trophy to complete your journey!', tip: 'Try to finish in as few steps as possible!', highlightElement: '.cell.end-goal', calloutPosition: 'center' }
+    { 
+        step: 1, 
+        title: 'Welcome to the Maze!', 
+        description: 'Tap on adjacent cells (up, down, left, right) to move your character one step at a time.', 
+        tip: 'Use Arrow Keys or WASD on desktop!', 
+        mobileTip: 'Tap adjacent cells to move!',
+        highlightElement: '#character', 
+        calloutPosition: 'center' 
+    },
+    { 
+        step: 2, 
+        title: 'AI Pathfinding Assistant', 
+        description: 'Toggle the AI button to enable automatic pathfinding. When enabled, tap anywhere and your character finds the best route!', 
+        tip: 'Manual mode is more challenging!', 
+        highlightElement: '#ai-toggle-btn', 
+        calloutPosition: 'left' 
+    },
+    { 
+        step: 3, 
+        title: 'Discover Hotspots', 
+        description: 'Navigate to colored markers throughout the maze to discover portfolio sections. Each reveals experience, skills, projects, and more!', 
+        tip: 'Track progress at the top - collect all 8!', 
+        highlightElement: '.cell.hotspot', 
+        calloutPosition: 'right' 
+    },
+    { 
+        step: 4, 
+        title: 'Portal Shortcuts', 
+        description: 'Find purple portals that teleport you instantly between connected locations. These shortcuts help navigate faster!', 
+        tip: 'Portals work both ways and count as 1 step!', 
+        highlightElement: '.cell.black-hole', 
+        calloutPosition: 'right' 
+    },
+    { 
+        step: 5, 
+        title: 'Complete Your Journey', 
+        description: 'After collecting all 8 sections, navigate to the golden trophy to complete your journey!', 
+        tip: 'Try to finish in as few steps as possible!', 
+        highlightElement: '.cell.end-goal', 
+        calloutPosition: 'center' 
+    }
 ];
 
 
