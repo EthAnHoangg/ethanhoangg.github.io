@@ -110,12 +110,33 @@ contactForm.addEventListener('submit', (e) => {
     const formData = new FormData(contactForm);
     const formValues = Object.fromEntries(formData.entries());
     
-    // Here you would normally send the data to a server
-    // For now, we'll just show a success message
-    alert('Thank you for your message! I will get back to you soon.');
-    
-    // Reset form
-    contactForm.reset();
+    // Mailto-based submission (works on static GitHub Pages)
+    const to = 'jimmyhan2610@gmail.com';
+    const name = (formValues.name || '').trim();
+    const email = (formValues.email || '').trim();
+    const subject = (formValues.subject || 'Portfolio Contact').trim();
+    const message = (formValues.message || '').trim();
+
+    // Basic validation
+    if (!name || !email || !message) {
+        alert('Please fill out your name, email, and message.');
+        return;
+    }
+
+    // Build mailto link
+    const encodedSubject = encodeURIComponent(subject);
+    const preface = `Name: ${name}\nEmail: ${email}\n\n`;
+    const encodedBody = encodeURIComponent(preface + message);
+    const mailtoLink = `mailto:${to}?subject=${encodedSubject}&body=${encodedBody}`;
+
+    // Open default email client
+    window.location.href = mailtoLink;
+
+    // Give quick feedback and reset
+    setTimeout(() => {
+        alert('Opening your email client to send the message. Thank you!');
+        contactForm.reset();
+    }, 200);
 });
 
 // Active navigation link highlighting

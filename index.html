@@ -29,6 +29,7 @@
                 <li><a href="#education" class="nav-link">Education</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
                 <li><a href="#references" class="nav-link">References</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
@@ -316,6 +317,9 @@
                     <div class="skill-tags">
                         <span class="skill-tag">AWS SageMaker</span>
                         <span class="skill-tag">AWS S3</span>
+                        <span class="skill-tag">AWS ECR</span>
+                        <span class="skill-tag">AWS SQS</span>
+                        <span class="skill-tag">AWS EC2</span>
                         <span class="skill-tag">ClearML</span>
                         <span class="skill-tag">Docker</span>
                         <span class="skill-tag">CI/CD</span>
@@ -535,16 +539,16 @@
                 </div>
                 <form class="contact-form" id="contactForm">
                     <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
+                        <input type="text" name="name" placeholder="Your Name" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
+                        <input type="email" name="email" placeholder="Your Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" placeholder="Subject" required>
+                        <input type="text" name="subject" placeholder="Subject" required>
                     </div>
                     <div class="form-group">
-                        <textarea rows="5" placeholder="Your Message" required></textarea>
+                        <textarea rows="5" name="message" placeholder="Your Message" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
