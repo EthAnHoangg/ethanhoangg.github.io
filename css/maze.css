@@ -700,34 +700,103 @@ body {
 @media screen and (max-width: 767px) {
     .tutorial-callout {
         max-width: calc(100% - 2rem);
-        padding: 1.25rem;
+        padding: 1rem;
         left: 1rem !important;
         right: 1rem !important;
         width: auto !important;
+        /* Position at bottom on mobile */
+        bottom: 1rem;
+        top: auto !important;
+    }
+
+    .tutorial-step-indicator {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.8rem;
+        margin-bottom: 0.6rem;
     }
 
     .tutorial-title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        margin-bottom: 0.6rem;
     }
 
     .tutorial-description {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .tutorial-tip {
+        padding: 0.6rem;
+        margin-top: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .tutorial-tip i {
+        font-size: 0.9rem;
+    }
+
+    .tutorial-tip span {
+        font-size: 0.8rem;
     }
 
     .tutorial-controls {
         flex-wrap: wrap;
-        gap: 0.75rem;
+        gap: 0.6rem;
+        padding-top: 1rem;
+    }
+
+    .tutorial-skip-btn {
+        font-size: 0.85rem;
+        padding: 0.4rem;
     }
 
     .tutorial-dots {
         order: -1;
         width: 100%;
         justify-content: center;
-        padding-bottom: 0.75rem;
+        padding-bottom: 0.6rem;
+        margin-bottom: 0.6rem;
+        border-bottom: 1px solid #e5e7eb;
     }
 
     .tutorial-nav-buttons {
         margin-left: auto;
+        gap: 0.4rem;
+    }
+
+    .tutorial-nav-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    /* Hide pointer on mobile */
+    .tutorial-pointer {
+        display: none !important;
+    }
+
+    /* Adjust spotlight for better mobile visibility */
+    .tutorial-spotlight {
+        border-radius: 8px;
+    }
+}
+
+/* Small mobile adjustments */
+@media screen and (max-width: 480px) {
+    .tutorial-callout {
+        padding: 0.85rem;
+    }
+
+    .tutorial-title {
+        font-size: 1rem;
+    }
+
+    .tutorial-description {
+        font-size: 0.85rem;
+    }
+
+    .tutorial-tip span {
+        font-size: 0.75rem;
     }
 }
 

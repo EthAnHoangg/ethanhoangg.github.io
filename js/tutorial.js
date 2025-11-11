@@ -62,12 +62,19 @@ export function initTutorial({ steps }) {
     function updateDisplay() {
         const currentStepIndex = state.currentStep - 1;
         const stepData = steps[currentStepIndex];
+        const isMobile = window.innerWidth <= 767;
 
         // Update text content
         tutorialStepNumber.textContent = state.currentStep;
         tutorialTitle.textContent = stepData.title;
         tutorialDescription.textContent = stepData.description;
-        tutorialTipElement.textContent = stepData.tip;
+        
+        // Show mobile-specific tip if available, otherwise show default tip
+        let tipText = stepData.tip;
+        if (isMobile && stepData.mobileTip) {
+            tipText = stepData.mobileTip;
+        }
+        tutorialTipElement.textContent = tipText;
 
         // Update dots
         tutorialDots.forEach((dot, index) => {
@@ -95,54 +102,69 @@ export function initTutorial({ steps }) {
 
         const targetRect = targetElement.getBoundingClientRect();
         const calloutRect = tutorialCallout.getBoundingClientRect();
+        
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const isMobile = viewportWidth <= 767;
 
         // Spotlight effect around element
-        const spotlightSize = 20;
+        const spotlightSize = isMobile ? 12 : 20; // Smaller spotlight on mobile
+        const spotlightOpacity = isMobile ? 0.6 : 0.7; // Lighter overlay on mobile
         tutorialSpotlight.style.boxShadow = `
-            0 0 0 9999px rgba(0, 0, 0, 0.7),
+            0 0 0 9999px rgba(0, 0, 0, ${spotlightOpacity}),
             inset 0 0 ${spotlightSize}px rgba(0, 0, 0, 0.3)
         `;
         tutorialSpotlight.style.top = `${targetRect.top - spotlightSize}px`;
         tutorialSpotlight.style.left = `${targetRect.left - spotlightSize}px`;
         tutorialSpotlight.style.width = `${targetRect.width + spotlightSize * 2}px`;
         tutorialSpotlight.style.height = `${targetRect.height + spotlightSize * 2}px`;
-        tutorialSpotlight.style.borderRadius = '12px';
+        tutorialSpotlight.style.borderRadius = isMobile ? '8px' : '12px';
 
         // Position callout
         let calloutTop, calloutLeft;
         let pointerTop, pointerLeft, pointerClass;
 
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        if (stepData.calloutPosition === 'center') {
-            calloutTop = (viewportHeight - calloutRect.height) / 2;
-            calloutLeft = (viewportWidth - calloutRect.width) / 2;
+        // On mobile, force center or bottom positioning
+        if (isMobile) {
+            // Always position at bottom of screen on mobile
+            calloutTop = viewportHeight - calloutRect.height - 20;
+            calloutLeft = 16; // 1rem padding on sides
             tutorialPointer.style.display = 'none';
-        } else if (stepData.calloutPosition === 'left') {
-            calloutTop = targetRect.top + (targetRect.height / 2) - (calloutRect.height / 2);
-            calloutLeft = targetRect.left - calloutRect.width - 40;
-            pointerTop = targetRect.top + (targetRect.height / 2) - 15;
-            pointerLeft = targetRect.left - 40;
-            pointerClass = 'arrow-right';
-            tutorialPointer.style.display = 'block';
-        } else if (stepData.calloutPosition === 'right') {
-            calloutTop = targetRect.top + (targetRect.height / 2) - (calloutRect.height / 2);
-            calloutLeft = targetRect.right + 40;
-            pointerTop = targetRect.top + (targetRect.height / 2) - 15;
-            pointerLeft = targetRect.right + 10;
-            pointerClass = 'arrow-left';
-            tutorialPointer.style.display = 'block';
-        }
+            
+            // Reset any fixed positioning from CSS
+            tutorialCallout.style.width = 'auto';
+            tutorialCallout.style.right = '1rem';
+        } else {
+            // Desktop positioning
+            if (stepData.calloutPosition === 'center') {
+                calloutTop = (viewportHeight - calloutRect.height) / 2;
+                calloutLeft = (viewportWidth - calloutRect.width) / 2;
+                tutorialPointer.style.display = 'none';
+            } else if (stepData.calloutPosition === 'left') {
+                calloutTop = targetRect.top + (targetRect.height / 2) - (calloutRect.height / 2);
+                calloutLeft = targetRect.left - calloutRect.width - 40;
+                pointerTop = targetRect.top + (targetRect.height / 2) - 15;
+                pointerLeft = targetRect.left - 40;
+                pointerClass = 'arrow-right';
+                tutorialPointer.style.display = 'block';
+            } else if (stepData.calloutPosition === 'right') {
+                calloutTop = targetRect.top + (targetRect.height / 2) - (calloutRect.height / 2);
+                calloutLeft = targetRect.right + 40;
+                pointerTop = targetRect.top + (targetRect.height / 2) - 15;
+                pointerLeft = targetRect.right + 10;
+                pointerClass = 'arrow-left';
+                tutorialPointer.style.display = 'block';
+            }
 
-        // Keep within viewport
-        calloutTop = Math.max(20, Math.min(calloutTop, viewportHeight - calloutRect.height - 20));
-        calloutLeft = Math.max(20, Math.min(calloutLeft, viewportWidth - calloutRect.width - 20));
+            // Keep within viewport (desktop only)
+            calloutTop = Math.max(20, Math.min(calloutTop, viewportHeight - calloutRect.height - 20));
+            calloutLeft = Math.max(20, Math.min(calloutLeft, viewportWidth - calloutRect.width - 20));
+        }
 
         tutorialCallout.style.top = `${calloutTop}px`;
         tutorialCallout.style.left = `${calloutLeft}px`;
 
-        if (tutorialPointer.style.display !== 'none') {
+        if (tutorialPointer.style.display !== 'none' && !isMobile) {
             tutorialPointer.className = 'tutorial-pointer ' + pointerClass;
             tutorialPointer.style.top = `${pointerTop}px`;
             tutorialPointer.style.left = `${pointerLeft}px`;
@@ -158,6 +180,17 @@ export function initTutorial({ steps }) {
             const step = parseInt(dot.getAttribute('data-step'));
             goToStep(step);
         });
+    });
+
+    // Handle window resize for responsive repositioning
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        if (tutorialOverlay.style.display !== 'none') {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateDisplay();
+            }, 100);
+        }
     });
 
     // Public API
