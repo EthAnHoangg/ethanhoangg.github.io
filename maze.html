@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Van-An Hoang - Interactive Maze Portfolio</title>
     <meta name="description" content="Explore Van-An Hoang's portfolio through an interactive maze experience">
+    <link rel="icon" href="assets/images/favicon.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/shared.css">
     <link rel="stylesheet" href="css/maze.css">
@@ -16,35 +17,90 @@
             <h1>Welcome to the Maze Portfolio!</h1>
             <p>Embark on an interactive journey through my portfolio maze!</p>
 
-            <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 1rem; border-radius: 12px; margin: 1.5rem 0; color: white; text-align: center;">
-                <i class="fas fa-trophy" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
-                <h3 style="margin: 0.5rem 0; font-size: 1.1rem;">Your Mission</h3>
-                <p style="margin: 0; font-size: 0.9rem;">Discover all 7 sections, then reach the golden trophy to complete your journey!</p>
+            <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 0.85rem 1rem; border-radius: 12px; margin: 1rem 0; color: white; text-align: center;">
+                <i class="fas fa-trophy" style="font-size: 1.6rem; margin-bottom: 0.4rem;"></i>
+                <h3 style="margin: 0.4rem 0; font-size: 1rem;">Your Mission</h3>
+                <p style="margin: 0; font-size: 0.85rem; color: white; line-height: 1.4;">Discover all 8 sections, then reach the golden trophy to complete your journey!</p>
             </div>
 
             <div class="controls-info">
                 <h3>Controls:</h3>
                 <ul>
                     <li class="desktop-only"><i class="fas fa-keyboard"></i> Use <strong>Arrow Keys</strong> or <strong>WASD</strong> to move</li>
-                    <li><i class="fas fa-hand-pointer"></i> <strong>Tap</strong> on any walkable cell to navigate</li>
+                    <li><i class="fas fa-hand-pointer"></i> <strong>Tap adjacent cells</strong> to move one step at a time</li>
+                    <li><i class="fas fa-brain"></i> Toggle <strong>AI Button</strong> (top-right) to enable auto-pathfinding</li>
                     <li class="desktop-only"><i class="fas fa-times"></i> Press <strong>ESC</strong> to close content modals</li>
                 </ul>
             </div>
+
+            <div style="background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%); padding: 0.85rem 1rem; border-radius: 12px; margin: 1rem 0; color: white;">
+                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;">
+                    <i class="fas fa-link" style="font-size: 1.3rem; color: #c4b5fd;"></i>
+                    <h3 style="margin: 0; font-size: 1rem;">Black Hole Portals</h3>
+                </div>
+                <p style="margin: 0; font-size: 0.85rem; line-height: 1.4; color: white;">
+                    Discover mysterious <strong>purple portals</strong> scattered in the maze! Walk through them to instantly <strong>teleport</strong> between connected locations. Use these shortcuts to navigate the maze faster!
+                </p>
+            </div>
+
             <div class="hotspots-info">
-                <h3>Collect All 7 Sections:</h3>
+                <h3>Collect All 8 Sections:</h3>
                 <div class="hotspot-list">
                     <span class="hotspot-badge about"><i class="fas fa-user"></i> About</span>
                     <span class="hotspot-badge experience"><i class="fas fa-briefcase"></i> Experience</span>
                     <span class="hotspot-badge education"><i class="fas fa-graduation-cap"></i> Education</span>
                     <span class="hotspot-badge skills"><i class="fas fa-code"></i> Skills</span>
+                    <span class="hotspot-badge blog"><i class="fas fa-blog"></i> Blog</span>
                     <span class="hotspot-badge projects"><i class="fas fa-project-diagram"></i> Projects</span>
                     <span class="hotspot-badge references"><i class="fas fa-user-tie"></i> References</span>
                     <span class="hotspot-badge contact"><i class="fas fa-envelope"></i> Contact</span>
                 </div>
             </div>
-            <button id="start-btn" class="start-btn">Start Exploring</button>
+            <button id="start-btn" class="start-btn">Start Tutorial</button>
             <a href="index.html" class="traditional-link">View Traditional Version</a>
         </div>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div id="tutorial-overlay" class="tutorial-overlay" style="display: none;">
+        <!-- Spotlight overlay -->
+        <div class="tutorial-spotlight"></div>
+
+        <!-- Tutorial callout box -->
+        <div class="tutorial-callout">
+            <div class="tutorial-callout-content">
+                <div class="tutorial-step-indicator">
+                    <span class="tutorial-step-number">1</span> / 5
+                </div>
+                <h3 class="tutorial-title">Welcome to the Maze!</h3>
+                <p class="tutorial-description">Click on adjacent cells to move your character one step at a time.</p>
+                <div class="tutorial-tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Use Arrow Keys or WASD on desktop!</span>
+                </div>
+            </div>
+            <div class="tutorial-controls">
+                <button id="tutorial-skip" class="tutorial-skip-btn">Skip</button>
+                <div class="tutorial-dots">
+                    <span class="tutorial-dot active" data-step="1"></span>
+                    <span class="tutorial-dot" data-step="2"></span>
+                    <span class="tutorial-dot" data-step="3"></span>
+                    <span class="tutorial-dot" data-step="4"></span>
+                    <span class="tutorial-dot" data-step="5"></span>
+                </div>
+                <div class="tutorial-nav-buttons">
+                    <button id="tutorial-prev" class="tutorial-nav-btn" style="visibility: hidden;">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="tutorial-next" class="tutorial-nav-btn tutorial-nav-btn-primary">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pointer arrow (dynamically positioned) -->
+        <div class="tutorial-pointer"></div>
     </div>
 
     <!-- Main Maze Container -->
@@ -56,9 +112,24 @@
                 <p>AI Research Engineer</p>
             </div>
             <div class="progress-info">
-                <span id="discovered-count">0</span>/7 Sections Discovered
+                <div style="display: flex; gap: 1.5rem; align-items: center;">
+                    <div>
+                        <span id="discovered-count">0</span>/8 Sections Discovered
+                    </div>
+                    <div style="border-left: 2px solid rgba(255, 255, 255, 0.2); padding-left: 1.5rem;">
+                        <i class="fas fa-shoe-prints"></i> Steps: <span id="step-count">0</span>
+                    </div>
+                </div>
             </div>
             <div class="ui-controls">
+                <button id="ai-toggle-btn" class="ui-btn">
+                    <i class="fas fa-brain"></i>
+                    <div class="ai-tooltip">
+                        <div class="ai-tooltip-title">AI Pathfinding</div>
+                        <div class="ai-tooltip-status">OFF - Manual Mode</div>
+                        <div class="ai-tooltip-desc">Click to enable auto-navigation</div>
+                    </div>
+                </button>
                 <a href="index.html" class="ui-btn" title="Traditional Version">
                     <i class="fas fa-home"></i>
                 </a>
@@ -72,7 +143,7 @@
 
         <!-- Character -->
         <div id="character" class="character">
-            <img src="assets/images/character.png" alt="Character">
+            <img src="assets/images/avatar.png" alt="Character">
         </div>
     </div>
 
@@ -97,9 +168,16 @@
                 <h2>About Me</h2>
             </div>
             <div class="modal-text">
-                <p>I'm an AI Research Engineer currently pursuing a Master's in Artificial Intelligence at the University of Technology Sydney. With over 2 years of professional experience in machine learning and computer vision, I specialize in deploying production-ready AI systems that solve real-world problems.</p>
+                <div class="about-top-modal">
+                    <div class="about-portrait">
+                        <img src="assets/images/avatar.png" alt="Van-An Hoang">
+                    </div>
+                    <div class="about-text-modal">
+                        <p>I'm an AI Research Engineer currently pursuing a Master's in Artificial Intelligence at the University of Technology Sydney. With over 2 years of professional experience in machine learning and computer vision, I specialize in deploying production-ready AI systems that solve real-world problems.</p>
 
-                <p>My expertise spans deep generative models, computer vision, and MLOps. I've successfully deployed semantic search engines, developed automated review systems using Vision-Language Models, and contributed to cutting-edge research in diffusion models. I'm passionate about bridging the gap between research and production, creating AI solutions that are both technically sound and commercially viable.</p>
+                        <p>My expertise spans deep generative models, computer vision, and MLOps. I've successfully deployed semantic search engines, developed automated review systems using Vision-Language Models, and contributed to cutting-edge research in diffusion models. I'm passionate about bridging the gap between research and production, creating AI solutions that are both technically sound and commercially viable.</p>
+                    </div>
+                </div>
 
                 <div class="highlight-cards">
                     <div class="highlight-card">
@@ -276,7 +354,6 @@
                             <span>AWS SageMaker</span>
                             <span>ClearML</span>
                             <span>AWS S3</span>
-                            <span>Docker</span>
                             <span>CI/CD</span>
                             <span>Git</span>
                         </div>
@@ -314,6 +391,118 @@
             </div>
         </div>
 
+        <!-- Blog Section -->
+        <div id="blog-content">
+            <div class="modal-header">
+                <i class="fas fa-blog section-icon"></i>
+                <h2>Blog & Writing</h2>
+            </div>
+            <div class="modal-text">
+                <div class="blog-article">
+                    <div class="blog-meta-info">
+                        <span class="blog-date"><i class="fas fa-calendar-alt"></i> 2024</span>
+                        <span class="blog-platform"><i class="fab fa-github"></i> GitHub</span>
+                        <span class="blog-lang">English</span>
+                    </div>
+                    <h3><i class="fas fa-book"></i> Marimo: A Modern Alternative to Jupyter Notebooks</h3>
+                    <p class="blog-subtitle">Doubling Productivity in AI Model Analysis</p>
+                    <p class="blog-desc">Exploring Marimo's reactive notebook model and how it addresses Jupyter's challenges. This presentation shares my personal journey of switching to Marimo, which doubled my productivity in AI model analysis and significantly improved team collaboration through better reproducibility and interactivity.</p>
+
+                    <div class="blog-topics">
+                        <h4><i class="fas fa-lightbulb"></i> Key Topics Covered:</h4>
+                        <ul>
+                            <li>Marimo basics: Introduction to reactive notebook model</li>
+                            <li>Solving Jupyter's challenges: Reproducibility, hidden state, and interactivity</li>
+                            <li>Productivity boost: How switching doubled productivity in AI model analysis</li>
+                            <li>Team collaboration: Improved workflow and sharing capabilities</li>
+                            <li>Interactive demos: Live UI elements and dynamic data visualization</li>
+                        </ul>
+                    </div>
+
+                    <div class="blog-tags-section">
+                        <span class="tag">Python</span>
+                        <span class="tag">Data Science</span>
+                        <span class="tag">Productivity</span>
+                        <span class="tag">Tools</span>
+                    </div>
+
+                    <p class="blog-org"><i class="fas fa-chalkboard-teacher"></i> Company Seminar Presentation</p>
+                    <a href="https://github.com/EthAnHoangg/marimo-intro" target="_blank" class="blog-read-btn">
+                        <i class="fab fa-github"></i> View Repository
+                    </a>
+                </div>
+
+                <div class="blog-article">
+                    <div class="blog-meta-info">
+                        <span class="blog-date"><i class="fas fa-calendar-alt"></i> October 20, 2023</span>
+                        <span class="blog-platform"><i class="fas fa-newspaper"></i> Viblo</span>
+                        <span class="blog-lang">Vietnamese</span>
+                    </div>
+                    <h3><i class="fas fa-atom"></i> InstaFlow: One Step to the Cloud with Diffusion</h3>
+                    <p class="blog-subtitle">InstaFlow: Một bước lên mây với Diffusion?</p>
+                    <p class="blog-desc">Deep dive into InstaFlow, a breakthrough model that achieves high-quality text-to-image generation in just one step, built on Stable Diffusion. Explores rectified flow mechanisms, reflow techniques, and knowledge distillation for rapid image synthesis.</p>
+
+                    <div class="blog-topics">
+                        <h4><i class="fas fa-lightbulb"></i> Key Topics Covered:</h4>
+                        <ul>
+                            <li>Rectified Flow mechanism for straightening probability trajectories</li>
+                            <li>Reflow technique for iterative refinement</li>
+                            <li>Text-conditioned generation approaches</li>
+                            <li>Knowledge distillation applications in diffusion models</li>
+                            <li>U-Net vs. Stacked U-Net architecture comparisons</li>
+                        </ul>
+                    </div>
+
+                    <div class="blog-tags-section">
+                        <span class="tag">Diffusion Models</span>
+                        <span class="tag">Generative AI</span>
+                        <span class="tag">Deep Learning</span>
+                        <span class="tag">Computer Vision</span>
+                    </div>
+
+                    <p class="blog-org"><i class="fas fa-building"></i> Written at PIXTA Vietnam</p>
+                    <a href="https://viblo.asia/p/instaflow-mot-buoc-len-may-voi-diffusion-vlZL9oxZ4QK" target="_blank" class="blog-read-btn">
+                        <i class="fas fa-external-link-alt"></i> Read Full Article
+                    </a>
+                </div>
+
+                <div class="blog-article">
+                    <div class="blog-meta-info">
+                        <span class="blog-date"><i class="fas fa-calendar-alt"></i> December 16, 2021</span>
+                        <span class="blog-platform"><i class="fas fa-book"></i> Personal Notes</span>
+                        <span class="blog-lang">English/Vietnamese</span>
+                    </div>
+                    <h3><i class="fas fa-calculator"></i> Simplex Method</h3>
+                    <p class="blog-subtitle">Phương pháp đơn hình</p>
+                    <p class="blog-desc">Comprehensive tutorial on the Simplex Method for linear programming optimization. Covers the complete algorithm from problem setup to finding optimal solutions, with step-by-step worked examples including constraint conversion, tableau construction, pivoting operations, and solution interpretation.</p>
+
+                    <div class="blog-topics">
+                        <h4><i class="fas fa-lightbulb"></i> Key Topics Covered:</h4>
+                        <ul>
+                            <li>Complete simplex algorithm with 8-step process</li>
+                            <li>Converting inequalities to standard form with slack variables</li>
+                            <li>Constructing and interpreting simplex tableaux</li>
+                            <li>Identifying pivot elements and performing row operations</li>
+                            <li>Real-world example: job scheduling optimization problem</li>
+                            <li>Detailed mathematical explanations and quotient calculations</li>
+                        </ul>
+                    </div>
+
+                    <div class="blog-tags-section">
+                        <span class="tag">Linear Programming</span>
+                        <span class="tag">Optimization</span>
+                        <span class="tag">Operations Research</span>
+                        <span class="tag">Mathematics</span>
+                    </div>
+
+                    <p class="blog-org"><i class="fas fa-user"></i> Personal Study</p>
+                    <a href="simplexmethod.html" target="_blank" class="blog-read-btn">
+                        <i class="fas fa-external-link-alt"></i> Read Full Article
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <!-- Projects Section -->
         <div id="projects-content">
             <div class="modal-header">
@@ -344,11 +533,13 @@
                         <li>Achieved acceleration in convergence speed and improved FID/IS metrics</li>
                         <li>Detailed empirical results demonstrating effectiveness of the approach</li>
                     </ul>
+                    <p><a href="https://github.com/HoangAnAIRS/exponential-SNR-diffusion" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: 600;"><i class="fab fa-github"></i> View Project</a></p>
                 </div>
 
                 <div class="project-item">
                     <h3><i class="fas fa-cloud-rain"></i> Rain Removal Analysis</h3>
                     <p class="project-tech"><strong>Tech Stack:</strong> PyTorch, OpenCV, GAN, CNN, DDPM, Transweather</p>
+                    <p><strong>Duration:</strong> Oct 2022 - Jan 2023</p>
                     <p>Comprehensive analysis of different methods for rain removal task:</p>
                     <ul>
                         <li>Fine-tuned Gated Context Aggregation Network on the task of removing rain drops on lens when capturing landscapes</li>
@@ -356,6 +547,21 @@
                         <li>Compared results with other models including DDPM, GAN, and Transweather</li>
                         <li>Provided comprehensive analysis of traditional vs. deep learning approaches</li>
                     </ul>
+                    <p><a href="https://drive.google.com/drive/folders/1zqu1nTZ7Yb06Lkm0utC-yvT6vVn9DRC9?usp=drive_link" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: 600;"><i class="fas fa-external-link-alt"></i> View Project</a></p>
+                </div>
+
+                <div class="project-item">
+                    <h3><i class="fas fa-gamepad"></i> 2048 Game</h3>
+                    <p class="project-tech"><strong>Tech Stack:</strong> Minimax Algorithm, UI/UX Design, AI Algorithm, Game Development</p>
+                    <p>Interactive 2048 puzzle game with AI opponent powered by Minimax algorithm:</p>
+                    <ul>
+                        <li>Designed and implemented responsive, intuitive user interface for enhanced gaming experience</li>
+                        <li>Developed Minimax algorithm with alpha-beta pruning for intelligent AI opponent</li>
+                        <li>Implemented AI decision-making logic enabling autonomous gameplay and winning strategies</li>
+                        <li>Optimized algorithm performance for smooth real-time game interactions</li>
+                        <li>Created engaging visual design with interactive controls and game state visualization</li>
+                    </ul>
+                    <p><a href="https://github.com/hlongng2002241/2048" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: 600;"><i class="fab fa-github"></i> View Project</a></p>
                 </div>
             </div>
         </div>
