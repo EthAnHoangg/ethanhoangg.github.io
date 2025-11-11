@@ -1,301 +1,280 @@
-# Personal Portfolio Website - Hoang Van An
+# 🎯 Personal Portfolio - Van-An Hoang
 
-A modern, responsive personal portfolio website built with HTML, CSS, and JavaScript.
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live-brightgreen)](https://ethanhoangg.github.io)
 
-## Features
+> An interactive personal portfolio website featuring an innovative maze-based navigation system powered by A* pathfinding algorithm. Explore my professional journey through a unique, gamified experience!
 
-### Two Portfolio Versions
-- 🎮 **Interactive Maze Portfolio**: Explore portfolio through a fun maze game!
-- 📄 **Traditional Portfolio**: Classic, professional portfolio layout
+## 🌟 Features
 
-### Common Features
-- 🎨 **Modern Design**: Clean and professional UI with smooth animations
-- 📱 **Fully Responsive**: Works perfectly on all devices (mobile, tablet, desktop)
-- 🚀 **Performance Optimized**: Fast loading with optimized assets
-- ✨ **Interactive Elements**: Smooth scrolling, hover effects, and animations
-- 🎯 **Section Navigation**: Easy navigation between different sections
-- 📧 **Contact Information**: Multiple ways to get in touch
-- 💼 **Professional Sections**:
-  - Hero/Landing page
-  - About me
-  - Work experience with timeline
-  - Education
-  - Skills showcase
-  - Featured projects
-  - References
-  - Contact information
+### Interactive Maze Navigation
+- **Gamified Portfolio Experience**: Navigate through an interactive maze to discover different sections of my portfolio
+- **AI Pathfinding**: Toggle between manual navigation and A* algorithm-powered automatic pathfinding
+- **Portal System**: Use teleportation portals for quick navigation shortcuts
+- **Progress Tracking**: Real-time step counter and section discovery tracker
+- **Performance Metrics**: Compare your navigation efficiency against the optimal path
 
-### Maze Portfolio Features
-- 🕹️ **Interactive Gameplay**: Use arrow keys or click to navigate
-- 🏆 **Goal-based Exploration**: Collect all sections and reach the trophy
-- 📱 **Touch-friendly**: Optimized for mobile devices
-- 🎨 **Animated Character**: Custom character with smooth animations
-- 💡 **Tooltips**: Hover over hotspots to see section names
-- ✅ **Progress Tracking**: See how many sections you've discovered
+### Portfolio Sections
+- **About**: Background, expertise, and professional highlights
+- **Experience**: Detailed work history with major projects and achievements
+- **Education**: Academic credentials and scholarships
+- **Skills**: Technical skills categorized by domain
+- **Projects**: Featured projects with descriptions and live links
+- **Blog**: Technical articles on AI, ML, and optimization
+- **References**: Professional recommendations
+- **Contact**: Get in touch information and social links
 
-## Technologies Used
+### Technical Highlights
+- 📱 **Fully Responsive**: Optimized for desktop, tablet, and mobile devices
+- 🎮 **Interactive Tutorial**: Step-by-step guide for first-time visitors
+- 🎨 **Modern UI/UX**: Clean design with smooth animations and transitions
+- ⚡ **Performance Optimized**: Fast loading with efficient rendering
+- ♿ **Accessible**: Following web accessibility best practices
+- 🌐 **Cross-browser Compatible**: Works seamlessly across all modern browsers
 
-- HTML5
-- CSS3 (with CSS Grid and Flexbox)
-- Vanilla JavaScript
-- Font Awesome Icons
+## 🚀 Quick Start
 
-## Setup Instructions
+### View Online
+Visit the live portfolio: [https://ethanhoangg.github.io](https://ethanhoangg.github.io)
 
-### Option 1: Simple Setup (No Server Required)
+### Run Locally
 
-1. **Download all files** to a folder on your computer
-2. **Open `index.html`** directly in your web browser
-3. That's it! The website will work locally
+1. **Clone the repository**
+```bash
+git clone https://github.com/EthAnHoangg/personal-web.git
+cd personal-web
+```
 
-### Option 2: Using Live Server (Recommended for Development)
+2. **Open in browser**
+```bash
+# Using Python
+python -m http.server 8000
 
-1. **Install VS Code** if you haven't already
-2. **Install the Live Server extension** in VS Code
-3. **Open the project folder** in VS Code
-4. **Right-click on `index.html`** and select "Open with Live Server"
-5. The website will open in your browser with live reload enabled
+# Using Node.js
+npx http-server
 
-### Option 3: Deploy to Web
+# Or simply open index.html in your browser
+open index.html
+```
 
-You can deploy this website for free using:
+3. **Navigate to**
+```
+http://localhost:8000
+```
 
-#### GitHub Pages
-1. Create a GitHub repository
-2. Push your code to the repository
-3. Go to Settings > Pages
-4. Select the main branch as source
-5. Your site will be live at `https://yourusername.github.io/repository-name`
+## 📁 Project Structure
 
-#### Netlify
-1. Sign up for a free Netlify account
-2. Drag and drop your project folder to Netlify
-3. Your site will be live in seconds!
+```
+personal-web/
+├── index.html              # Main portfolio page (traditional view)
+├── maze.html              # Interactive maze navigation
+├── simplexmethod.html     # Blog post on Simplex Method
+├── assets/
+│   ├── documents/         # CV and other documents
+│   │   └── Hoang_Van_An_CV_0210.pdf
+│   └── images/           # Portfolio images and icons
+│       ├── avatar.png
+│       ├── favicon.png
+│       └── portrait.jpeg
+├── css/
+│   ├── styles.css        # Main portfolio styles
+│   ├── maze.css          # Maze game styles
+│   └── shared.css        # Shared styles across pages
+├── js/
+│   ├── script.js         # Main portfolio JavaScript
+│   ├── maze.js           # Maze game logic and state management
+│   ├── constants.js      # Maze configuration and data
+│   ├── pathfinding.js    # A* pathfinding algorithm implementation
+│   ├── tutorial.js       # Interactive tutorial system
+│   └── blog.js           # Blog section functionality
+└── data/
+    └── portfolio.json    # Structured portfolio data
+```
 
-#### Vercel
-1. Sign up for a free Vercel account
-2. Import your GitHub repository or upload files
-3. Deploy with one click!
+## 🎮 Maze Navigation Guide
 
-## Customization Guide
+### Controls
+- **Desktop**: 
+  - Click adjacent cells to move
+  - Use Arrow Keys or WASD for keyboard navigation
+  - Toggle AI mode for automatic pathfinding
+- **Mobile**: 
+  - Tap adjacent cells to move step-by-step
+  - Enable AI mode and tap anywhere to auto-navigate
 
-### 1. Personal Information
+### Game Features
+- **8 Hotspots**: Discover all portfolio sections scattered throughout the maze
+- **Portal Shortcuts**: Purple portals teleport you between connected locations
+- **AI Toggle**: Switch between manual and AI-assisted navigation
+- **Efficiency Score**: Track your performance against the optimal 34-step solution
+- **Tutorial Mode**: Interactive guide for first-time players
 
-**Recommended Approach (Centralized)**:
-Edit `data/portfolio.json` to update all content in one place:
-- Personal information (name, title, contact)
-- About section
+### Winning the Game
+1. Navigate through the maze and discover all 8 hotspots
+2. Reach the golden trophy at the finish line
+3. View your performance metrics and efficiency score
+4. Challenge yourself to find the optimal path!
+
+## 💻 Technologies Used
+
+### Frontend
+- **HTML5**: Semantic markup and structure
+- **CSS3**: Modern styling with animations, gradients, and flexbox/grid
+- **JavaScript (ES6+)**: Vanilla JS with modules for clean architecture
+- **Font Awesome**: Icon library for visual elements
+
+### Algorithms
+- **A* Pathfinding**: Intelligent navigation with heuristic search
+- **Graph Traversal**: Maze representation and pathfinding
+- **State Management**: Game state handling and event-driven architecture
+
+### Design
+- **Responsive Design**: Mobile-first approach with breakpoints
+- **CSS Variables**: Dynamic theming and consistent styling
+- **CSS Animations**: Smooth transitions and interactive effects
+- **Accessibility**: ARIA labels and keyboard navigation support
+
+## 🧩 Key Components
+
+### 1. A* Pathfinding Algorithm
+```javascript
+// Intelligent pathfinding with Manhattan distance heuristic
+// Handles portal teleportation and obstacle avoidance
+// Optimized for real-time navigation
+```
+
+### 2. Responsive Grid System
+```javascript
+// Dynamic cell sizing based on viewport
+// Maintains aspect ratio across all devices
+// Smooth scaling and positioning
+```
+
+### 3. State Management
+```javascript
+// Game state tracking
+// Movement queue processing
+// Progress persistence
+```
+
+### 4. Interactive Tutorial
+```javascript
+// Step-by-step onboarding
+// Contextual hints and tooltips
+// Progressive disclosure of features
+```
+
+## 📊 Portfolio Highlights
+
+### Professional Experience
+- **AI Research Engineer** at PIXTA (Oct 2023 - Aug 2024)
+  - Deployed semantic search engine using OpenSearch and Weaviate
+  - Developed automated review system with Vision-Language Models
+  - Achieved 90% search result acceptance rate
+  
+- **Research Assistant** at DSLab, BKAI (Nov 2022 - July 2024)
+  - Research on efficient training methods for diffusion models
+  - Published technical blog on InstaFlow diffusion model
+
+### Education
+- **Master of Artificial Intelligence** - University of Technology Sydney (2025 - Present)
+  - UTS Academic Excellence International Scholarship
+- **Bachelor in Data Science & AI** - HUST (2020 - 2024)
+  - GPA: 3.66/4.0, Excellent Scholarship (Top 5%)
+
+### Technical Expertise
+- **AI/ML**: PyTorch, TensorFlow, Diffusion Models, Vision-Language Models
+- **MLOps**: AWS SageMaker, Docker, ClearML, CI/CD
+- **Computer Vision**: Object Detection, Semantic Segmentation, Multi-modal AI
+- **Search**: OpenSearch, ElasticSearch, Weaviate with vector embeddings
+
+## 🔧 Customization
+
+### Updating Portfolio Content
+Edit `data/portfolio.json` to update:
+- Personal information
 - Work experience
 - Education
 - Skills
 - Projects
+- Blog posts
 - References
 
-**Alternative Approach** (if not using dynamic loading):
-- Edit `index.html` for traditional portfolio
-- Edit `maze.html` for maze portfolio
-- Keep `data/portfolio.json` in sync for reference
+### Modifying Maze Layout
+Edit `js/constants.js` to customize:
+- Maze grid dimensions
+- Hotspot positions
+- Portal locations
+- Difficulty level
+- Optimal path steps
 
-### 2. Colors and Styling
+### Styling
+- `css/styles.css`: Main portfolio styling
+- `css/maze.css`: Maze-specific styles
+- `css/shared.css`: Common styles across pages
 
-Edit `css/shared.css` to change colors for **both** portfolios:
-- Primary colors (defined in `:root` CSS variables)
-- Hotspot colors (for maze portfolio)
-- Transition speeds
+## 🎨 Color Scheme
 
 ```css
-:root {
-    --primary-color: #2563eb;  /* Change this to your preferred color */
-    --secondary-color: #1e40af;
-    --accent-color: #3b82f6;
-    /* ... other colors */
-}
+/* Primary Colors */
+--primary-color: #2563eb      /* Blue */
+--secondary-color: #10b981    /* Green */
+--accent-color: #f59e0b       /* Amber */
+
+/* Background */
+--bg-dark: #0f172a           /* Navy */
+--bg-light: #1e293b          /* Slate */
+
+/* Text */
+--text-color: #e2e8f0        /* Light gray */
+--text-light: #94a3b8        /* Muted gray */
 ```
 
-For portfolio-specific styling:
-- Edit `css/styles.css` for traditional portfolio
-- Edit `css/maze.css` for maze portfolio
-
-### 3. Add Your CV
-
-1. Place your CV in `assets/documents/`
-2. Update the filename in both HTML files:
-   - `index.html`: Line ~50
-   - `maze.html`: Line ~460
-3. Update `data/portfolio.json` with the new path:
-
-```json
-{
-  "personal": {
-    "cv": "assets/documents/your-cv-filename.pdf"
-  }
-}
-```
-
-### 4. Update Social Links
-
-In `index.html`, find the social links sections and update the URLs:
-
-```html
-<a href="mailto:your.email@example.com">Email</a>
-<a href="https://linkedin.com/in/yourprofile">LinkedIn</a>
-<a href="https://github.com/yourprofile">GitHub</a>
-```
-
-### 5. Add Your Projects
-
-Edit the projects section in `index.html` with your actual projects:
-- Project names and descriptions
-- Technologies used
-- Links to GitHub repositories
-- Links to live demos
-
-### 6. Contact Form Setup
-
-The contact form currently shows an alert. To make it functional:
-
-**Option 1: Using Formspree (Easiest)**
-```html
-<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-```
-
-**Option 2: Using EmailJS**
-- Sign up at EmailJS
-- Follow their integration guide
-- Update the form submission handler in `script.js`
-
-**Option 3: Build your own backend**
-- Create an API endpoint
-- Update the form submission in `script.js` to send data to your API
-
-## File Structure
-
-**Updated: November 9, 2024** - Project has been refactored for better organization and maintainability.
-
-```
-personal-web/
-├── assets/
-│   ├── images/              # Image assets
-│   │   └── character.png   # Maze character sprite
-│   └── documents/          # Documents
-│       └── Hoang_Van_An_CV_0210.pdf  # CV/Resume
-├── css/
-│   ├── shared.css          # Shared CSS variables and utilities
-│   ├── styles.css          # Traditional portfolio styles
-│   └── maze.css            # Maze portfolio styles
-├── js/
-│   ├── script.js           # Traditional portfolio JavaScript
-│   └── maze.js             # Maze portfolio JavaScript
-├── data/
-│   └── portfolio.json      # Centralized portfolio data (single source of truth)
-├── index.html              # Traditional portfolio page
-├── maze.html               # Interactive maze portfolio page
-├── README.md               # This file
-├── REFACTORING.md          # Refactoring documentation
-└── UPDATES.md              # Update history
-```
-
-See [REFACTORING.md](REFACTORING.md) for detailed documentation about the new structure.
-
-## Browser Support
+## 📱 Browser Support
 
 - Chrome (latest)
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
-- Mobile browsers
+- Mobile browsers (iOS Safari, Chrome Mobile)
 
-## Performance Tips
+## 🤝 Contributing
 
-1. **Optimize images**: Compress images before adding them
-2. **Use WebP format**: For better compression
-3. **Lazy loading**: Already implemented for images
-4. **Minify files**: Use tools like UglifyJS and CSSNano for production
+While this is a personal portfolio, suggestions and feedback are welcome!
 
-## Adding Images
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/improvement`)
+3. Commit your changes (`git commit -m 'Add some improvement'`)
+4. Push to the branch (`git push origin feature/improvement`)
+5. Open a Pull Request
 
-To add a profile picture or project images:
+## 📄 License
 
-1. Create an `images` folder
-2. Add your images there
-3. Update the image tags in HTML:
+This project is open source and available under the [MIT License](LICENSE).
 
-```html
-<img src="images/profile.jpg" alt="Your Name">
-```
+## 📬 Contact
 
-## Recent Updates
+**Van-An Hoang**
+- 📧 Email: [jimmyhan2610@gmail.com](mailto:jimmyhan2610@gmail.com)
+- 💼 LinkedIn: [linkedin.com/in/van-an-hoang](https://linkedin.com/in/van-an-hoang)
+- 🐙 GitHub: [@EthAnHoangg](https://github.com/EthAnHoangg)
+- 📱 Phone: +61 431 061 203
+- 📍 Location: Sydney, NSW, Australia
 
-### November 9, 2024 - Major Refactoring
-- ✅ Reorganized project into proper folder structure
-- ✅ Centralized portfolio data in `portfolio.json`
-- ✅ Created shared CSS variables for consistency
-- ✅ Updated character to custom PNG image
-- ✅ Synced content between maze and traditional versions
-- ✅ Improved maintainability and scalability
+## 🙏 Acknowledgments
 
-### Previous Updates
-- ✅ Added interactive maze portfolio
-- ✅ Implemented end goal system with trophy
-- ✅ Fixed responsive design issues
-- ✅ Added tooltips for maze hotspots
-
-## Future Enhancements
-
-- [ ] Implement dynamic data loading from portfolio.json
-- [ ] Add build process (Webpack/Vite)
-- [ ] Add dark mode toggle
-- [ ] Implement CSS preprocessing (SCSS)
-- [ ] Add automated testing
-- [ ] Set up CI/CD pipeline
-- [ ] Add blog section
-- [ ] Integrate with a CMS
-- [ ] Add testimonials section
-- [ ] Add multilingual support
-
-## Troubleshooting
-
-### Issue: Icons not showing
-- Check your internet connection (Font Awesome loads from CDN)
-- Or download Font Awesome and host it locally
-
-### Issue: Animations not working
-- Make sure JavaScript is enabled in your browser
-- Check browser console for errors (F12)
-
-### Issue: Mobile menu not working
-- Ensure `script.js` is properly linked
-- Check for JavaScript errors in console
-
-## License
-
-This project is free to use for personal purposes. Feel free to modify and customize it to your needs!
-
-## Support
-
-If you have questions or need help customizing:
-1. Check the comments in the code
-2. Refer to this README
-3. Search for HTML/CSS/JavaScript tutorials online
-
-## Credits
-
-- Icons: [Font Awesome](https://fontawesome.com/)
-- Fonts: System fonts for fast loading
-- Inspiration: Modern portfolio designs
+- Font Awesome for icons
+- Google Fonts for typography
+- Inspiration from interactive portfolio designs
+- UTS for academic support
 
 ---
 
-**Ready to launch your personal brand!** 🚀
+<div align="center">
 
-Remember to:
-1. ✅ Update all personal information
-2. ✅ Add your real CV
-3. ✅ Update social media links
-4. ✅ Add your actual projects
-5. ✅ Customize colors to your preference
-6. ✅ Test on different devices
-7. ✅ Deploy to the web!
+**⭐ If you found this portfolio interesting, consider starring the repository!**
 
-Good luck with your portfolio! 💼✨
+Made with ❤️ by Van-An Hoang
 
+[View Portfolio](https://ethanhoangg.github.io) • [Download CV](assets/documents/Hoang_Van_An_CV_0210.pdf) • [Connect on LinkedIn](https://linkedin.com/in/van-an-hoang)
+
+</div>
