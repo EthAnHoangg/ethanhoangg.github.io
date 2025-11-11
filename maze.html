@@ -17,27 +17,28 @@
             <h1>Welcome to the Maze Portfolio!</h1>
             <p>Embark on an interactive journey through my portfolio maze!</p>
 
-            <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 1rem; border-radius: 12px; margin: 1.5rem 0; color: white; text-align: center;">
-                <i class="fas fa-trophy" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
-                <h3 style="margin: 0.5rem 0; font-size: 1.1rem;">Your Mission</h3>
-                <p style="margin: 0; font-size: 0.9rem; color: white;">Discover all 8 sections, then reach the golden trophy to complete your journey!</p>
+            <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 0.85rem 1rem; border-radius: 12px; margin: 1rem 0; color: white; text-align: center;">
+                <i class="fas fa-trophy" style="font-size: 1.6rem; margin-bottom: 0.4rem;"></i>
+                <h3 style="margin: 0.4rem 0; font-size: 1rem;">Your Mission</h3>
+                <p style="margin: 0; font-size: 0.85rem; color: white; line-height: 1.4;">Discover all 8 sections, then reach the golden trophy to complete your journey!</p>
             </div>
 
             <div class="controls-info">
                 <h3>Controls:</h3>
                 <ul>
                     <li class="desktop-only"><i class="fas fa-keyboard"></i> Use <strong>Arrow Keys</strong> or <strong>WASD</strong> to move</li>
-                    <li><i class="fas fa-hand-pointer"></i> <strong>Tap</strong> on any walkable cell to navigate</li>
+                    <li><i class="fas fa-hand-pointer"></i> <strong>Tap adjacent cells</strong> to move one step at a time</li>
+                    <li><i class="fas fa-brain"></i> Toggle <strong>AI Button</strong> (top-right) to enable auto-pathfinding</li>
                     <li class="desktop-only"><i class="fas fa-times"></i> Press <strong>ESC</strong> to close content modals</li>
                 </ul>
             </div>
 
-            <div style="background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%); padding: 1rem; border-radius: 12px; margin: 1.5rem 0; color: white;">
-                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-link" style="font-size: 1.5rem; color: #c4b5fd;"></i>
-                    <h3 style="margin: 0; font-size: 1.1rem;">Black Hole Portals</h3>
+            <div style="background: linear-gradient(135deg, #4c1d95 0%, #2e1065 100%); padding: 0.85rem 1rem; border-radius: 12px; margin: 1rem 0; color: white;">
+                <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem;">
+                    <i class="fas fa-link" style="font-size: 1.3rem; color: #c4b5fd;"></i>
+                    <h3 style="margin: 0; font-size: 1rem;">Black Hole Portals</h3>
                 </div>
-                <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: white;">
+                <p style="margin: 0; font-size: 0.85rem; line-height: 1.4; color: white;">
                     Discover mysterious <strong>purple portals</strong> scattered in the maze! Walk through them to instantly <strong>teleport</strong> between connected locations. Use these shortcuts to navigate the maze faster!
                 </p>
             </div>
@@ -55,9 +56,51 @@
                     <span class="hotspot-badge contact"><i class="fas fa-envelope"></i> Contact</span>
                 </div>
             </div>
-            <button id="start-btn" class="start-btn">Start Exploring</button>
+            <button id="start-btn" class="start-btn">Start Tutorial</button>
             <a href="index.html" class="traditional-link">View Traditional Version</a>
         </div>
+    </div>
+
+    <!-- Tutorial Overlay -->
+    <div id="tutorial-overlay" class="tutorial-overlay" style="display: none;">
+        <!-- Spotlight overlay -->
+        <div class="tutorial-spotlight"></div>
+
+        <!-- Tutorial callout box -->
+        <div class="tutorial-callout">
+            <div class="tutorial-callout-content">
+                <div class="tutorial-step-indicator">
+                    <span class="tutorial-step-number">1</span> / 5
+                </div>
+                <h3 class="tutorial-title">Welcome to the Maze!</h3>
+                <p class="tutorial-description">Click on adjacent cells to move your character one step at a time.</p>
+                <div class="tutorial-tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Use Arrow Keys or WASD on desktop!</span>
+                </div>
+            </div>
+            <div class="tutorial-controls">
+                <button id="tutorial-skip" class="tutorial-skip-btn">Skip</button>
+                <div class="tutorial-dots">
+                    <span class="tutorial-dot active" data-step="1"></span>
+                    <span class="tutorial-dot" data-step="2"></span>
+                    <span class="tutorial-dot" data-step="3"></span>
+                    <span class="tutorial-dot" data-step="4"></span>
+                    <span class="tutorial-dot" data-step="5"></span>
+                </div>
+                <div class="tutorial-nav-buttons">
+                    <button id="tutorial-prev" class="tutorial-nav-btn" style="visibility: hidden;">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button id="tutorial-next" class="tutorial-nav-btn tutorial-nav-btn-primary">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pointer arrow (dynamically positioned) -->
+        <div class="tutorial-pointer"></div>
     </div>
 
     <!-- Main Maze Container -->
@@ -69,9 +112,24 @@
                 <p>AI Research Engineer</p>
             </div>
             <div class="progress-info">
-                <span id="discovered-count">0</span>/8 Sections Discovered
+                <div style="display: flex; gap: 1.5rem; align-items: center;">
+                    <div>
+                        <span id="discovered-count">0</span>/8 Sections Discovered
+                    </div>
+                    <div style="border-left: 2px solid rgba(255, 255, 255, 0.2); padding-left: 1.5rem;">
+                        <i class="fas fa-shoe-prints"></i> Steps: <span id="step-count">0</span>
+                    </div>
+                </div>
             </div>
             <div class="ui-controls">
+                <button id="ai-toggle-btn" class="ui-btn">
+                    <i class="fas fa-brain"></i>
+                    <div class="ai-tooltip">
+                        <div class="ai-tooltip-title">AI Pathfinding</div>
+                        <div class="ai-tooltip-status">OFF - Manual Mode</div>
+                        <div class="ai-tooltip-desc">Click to enable auto-navigation</div>
+                    </div>
+                </button>
                 <a href="index.html" class="ui-btn" title="Traditional Version">
                     <i class="fas fa-home"></i>
                 </a>

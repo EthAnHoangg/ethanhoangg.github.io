@@ -40,17 +40,17 @@ const HOTSPOTS = [
         description: 'Academic background and qualifications'
     },
     {
-        row: 8, col: 8, type: 'skills', icon: '\uf121', discovered: false,
+        row: 7, col: 7, type: 'skills', icon: '\uf121', discovered: false,
         title: 'Technical Skills',
         description: 'Technologies and tools I work with'
     },
     {
-        row: 7, col: 5, type: 'blog', icon: '\uf781', discovered: false,
+        row: 9, col: 5, type: 'blog', icon: '\uf781', discovered: false,
         title: 'Blog & Writing',
         description: 'Technical articles and research insights'
     },
     {
-        row: 4, col: 9, type: 'projects', icon: '\uf542', discovered: false,
+        row: 3, col: 9, type: 'projects', icon: '\uf542', discovered: false,
         title: 'Featured Projects',
         description: 'Explore my recent work and research'
     },
@@ -78,8 +78,8 @@ const END_GOAL = {
 // ===== Black Holes (Teleportation Points) =====
 const BLACK_HOLES = [
     {
-        row: 4,
-        col: 1,
+        row: 3,
+        col: 7,
         linkedTo: { row: 6, col: 6 },
         icon: '\uf0c1', // Link icon
         name: 'Portal A'
@@ -87,7 +87,7 @@ const BLACK_HOLES = [
     {
         row: 6,
         col: 6,
-        linkedTo: { row: 4, col: 1 },
+        linkedTo: { row: 3, col: 7 },
         icon: '\uf0c1', // Link icon
         name: 'Portal B'
     }
@@ -119,11 +119,66 @@ const gameState = {
     movementQueue: [],
     discoveredCount: 0,
     showCongratsOnClose: false, // Flag for showing congratulations after closing modal
+    stepCount: 0, // Total steps taken
+    aiPathfindingEnabled: false, // AI pathfinding mode (off by default)
 };
 
 // ===== DOM Elements =====
 let mazeGrid, character, modal, modalBody, modalClose;
-let instructionsOverlay, startBtn, discoveredCountElement;
+let instructionsOverlay, startBtn, discoveredCountElement, stepCountElement, aiToggleBtn;
+let tutorialOverlay, tutorialCallout, tutorialSpotlight, tutorialPointer;
+let tutorialStepNumber, tutorialTitle, tutorialDescription, tutorialTipElement;
+let tutorialPrevBtn, tutorialNextBtn, tutorialSkipBtn, tutorialDots;
+
+// ===== Tutorial State =====
+const tutorialState = {
+    currentStep: 1,
+    totalSteps: 5
+};
+
+// ===== Tutorial Steps Configuration =====
+const tutorialSteps = [
+    {
+        step: 1,
+        title: 'Welcome to the Maze!',
+        description: 'Click on adjacent cells (up, down, left, right) to move your character one step at a time.',
+        tip: 'Use Arrow Keys or WASD on desktop!',
+        highlightElement: '#character',
+        calloutPosition: 'center'
+    },
+    {
+        step: 2,
+        title: 'AI Pathfinding Assistant',
+        description: 'Toggle the AI button to enable automatic pathfinding. When enabled, click anywhere and your character finds the best route!',
+        tip: 'Manual mode is more challenging!',
+        highlightElement: '#ai-toggle-btn',
+        calloutPosition: 'left'
+    },
+    {
+        step: 3,
+        title: 'Discover Hotspots',
+        description: 'Navigate to colored markers throughout the maze to discover portfolio sections. Each reveals experience, skills, projects, and more!',
+        tip: 'Track progress at the top - collect all 8!',
+        highlightElement: '.cell.hotspot',
+        calloutPosition: 'right'
+    },
+    {
+        step: 4,
+        title: 'Portal Shortcuts',
+        description: 'Find purple portals that teleport you instantly between connected locations. These shortcuts help navigate faster!',
+        tip: 'Portals work both ways and count as 1 step!',
+        highlightElement: '.cell.black-hole',
+        calloutPosition: 'right'
+    },
+    {
+        step: 5,
+        title: 'Complete Your Journey',
+        description: 'After collecting all 8 sections, navigate to the golden trophy to complete your journey!',
+        tip: 'Try to finish in as few steps as possible!',
+        highlightElement: '.cell.end-goal',
+        calloutPosition: 'center'
+    }
+];
 
 // ===== Initialize Game =====
 document.addEventListener('DOMContentLoaded', () => {
@@ -145,6 +200,22 @@ function initializeDOM() {
     instructionsOverlay = document.getElementById('instructions');
     startBtn = document.getElementById('start-btn');
     discoveredCountElement = document.getElementById('discovered-count');
+    stepCountElement = document.getElementById('step-count');
+    aiToggleBtn = document.getElementById('ai-toggle-btn');
+
+    // Tutorial elements
+    tutorialOverlay = document.getElementById('tutorial-overlay');
+    tutorialCallout = document.querySelector('.tutorial-callout');
+    tutorialSpotlight = document.querySelector('.tutorial-spotlight');
+    tutorialPointer = document.querySelector('.tutorial-pointer');
+    tutorialStepNumber = document.querySelector('.tutorial-step-number');
+    tutorialTitle = document.querySelector('.tutorial-title');
+    tutorialDescription = document.querySelector('.tutorial-description');
+    tutorialTipElement = document.querySelector('.tutorial-tip span');
+    tutorialPrevBtn = document.getElementById('tutorial-prev');
+    tutorialNextBtn = document.getElementById('tutorial-next');
+    tutorialSkipBtn = document.getElementById('tutorial-skip');
+    tutorialDots = document.querySelectorAll('.tutorial-dot');
 }
 
 // ===== Device Detection =====
@@ -381,12 +452,29 @@ function setupEventListeners() {
         }
     });
 
-    // Start button
+    // Start button - show tutorial
     startBtn.addEventListener('click', () => {
         instructionsOverlay.classList.add('hidden');
         setTimeout(() => {
             instructionsOverlay.style.display = 'none';
+            showTutorial();
         }, 300);
+    });
+
+    // AI toggle button
+    aiToggleBtn.addEventListener('click', toggleAIPathfinding);
+
+    // Tutorial navigation
+    tutorialPrevBtn.addEventListener('click', previousTutorialStep);
+    tutorialNextBtn.addEventListener('click', nextTutorialStep);
+    tutorialSkipBtn.addEventListener('click', closeTutorial);
+
+    // Tutorial dot navigation
+    tutorialDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const step = parseInt(dot.getAttribute('data-step'));
+            goToTutorialStep(step);
+        });
     });
 }
 
@@ -442,7 +530,28 @@ function handleCellClick(targetRow, targetCol) {
         return;
     }
 
-    // Find path using A*
+    const { row, col } = gameState.characterPos;
+
+    // If AI pathfinding is disabled, only allow adjacent moves
+    if (!gameState.aiPathfindingEnabled) {
+        const rowDiff = Math.abs(targetRow - row);
+        const colDiff = Math.abs(targetCol - col);
+        const isAdjacent = (rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1);
+
+        if (!isAdjacent) {
+            console.log('AI Pathfinding is OFF - You can only move to adjacent cells!');
+            showAIWarning();
+            return;
+        }
+
+        // Move one step (like keyboard controls)
+        if (isValidMove(targetRow, targetCol)) {
+            moveCharacterWithHotspotCheck(targetRow, targetCol);
+        }
+        return;
+    }
+
+    // AI mode enabled - use A* pathfinding
     const path = findPath(
         gameState.characterPos.row,
         gameState.characterPos.col,
@@ -463,16 +572,19 @@ function handleCellClick(targetRow, targetCol) {
 // ===== Pathfinding (A* Algorithm) =====
 function findPath(startRow, startCol, endRow, endCol) {
     // A* pathfinding implementation
+    // Note: With teleportation, the heuristic is non-monotonic, so we don't use a closed set
+    // to ensure we always find the optimal path
     const openSet = [];
-    const closedSet = new Set();
     const cameFrom = new Map();
     const gScore = new Map();
     const fScore = new Map();
+    const inOpenSet = new Set(); // Track what's in openSet for faster lookup
 
     const startKey = `${startRow},${startCol}`;
     const endKey = `${endRow},${endCol}`;
 
     openSet.push({ row: startRow, col: startCol });
+    inOpenSet.add(startKey);
     gScore.set(startKey, 0);
     fScore.set(startKey, heuristic(startRow, startCol, endRow, endCol));
 
@@ -486,13 +598,23 @@ function findPath(startRow, startCol, endRow, endCol) {
 
         const current = openSet.shift();
         const currentKey = `${current.row},${current.col}`;
+        inOpenSet.delete(currentKey);
 
         // Check if we reached the end
         if (currentKey === endKey) {
-            return reconstructPath(cameFrom, current);
-        }
+            const path = reconstructPath(cameFrom, current);
 
-        closedSet.add(currentKey);
+            // Log path information
+            const hasTeleport = path.some(node => node.isTeleport);
+            console.log('=== A* Path Found ===');
+            console.log(`From: (${startRow}, ${startCol}) → To: (${endRow}, ${endCol})`);
+            console.log(`Distance: ${path.length} steps`);
+            console.log(`Uses teleportation: ${hasTeleport}`);
+            console.log('Path:', path.map(p => `(${p.row},${p.col})${p.isTeleport ? ' [TELEPORT]' : ''}`).join(' → '));
+            console.log('=====================');
+
+            return path;
+        }
 
         // Check all neighbors
         const neighbors = getNeighbors(current.row, current.col);
@@ -500,34 +622,74 @@ function findPath(startRow, startCol, endRow, endCol) {
         for (const neighbor of neighbors) {
             const neighborKey = `${neighbor.row},${neighbor.col}`;
 
-            if (closedSet.has(neighborKey)) continue;
-
             // Cost is 1 for normal moves and teleports
             const tentativeGScore = gScore.get(currentKey) + 1;
 
-            if (!openSet.find(n => `${n.row},${n.col}` === neighborKey)) {
-                openSet.push(neighbor);
-            } else if (tentativeGScore >= gScore.get(neighborKey)) {
+            // Skip if we've already found a better or equal path to this neighbor
+            const existingGScore = gScore.get(neighborKey);
+            if (existingGScore !== undefined && tentativeGScore >= existingGScore) {
                 continue;
             }
 
+            // Debug: Log when we find a teleport neighbor
+            if (neighbor.isTeleport) {
+                console.log(`  Found teleport: (${current.row},${current.col}) → (${neighbor.row},${neighbor.col}) with gScore=${tentativeGScore}`);
+            }
+
+            // Add to openSet if not already there
+            if (!inOpenSet.has(neighborKey)) {
+                openSet.push(neighbor);
+                inOpenSet.add(neighborKey);
+            }
+
             // Store the path with teleport information
-            cameFrom.set(neighborKey, { 
-                row: current.row, 
+            cameFrom.set(neighborKey, {
+                row: current.row,
                 col: current.col,
-                isTeleport: neighbor.isTeleport 
+                isTeleport: neighbor.isTeleport
             });
             gScore.set(neighborKey, tentativeGScore);
             fScore.set(neighborKey, tentativeGScore + heuristic(neighbor.row, neighbor.col, endRow, endCol));
         }
     }
 
-    return null; // No path found
+    // No path found
+    console.log('=== A* Path NOT Found ===');
+    console.log(`From: (${startRow}, ${startCol}) → To: (${endRow}, ${endCol})`);
+    console.log('No valid path exists!');
+    console.log('=========================');
+    return null;
 }
 
 // ===== Heuristic Function (Manhattan Distance) =====
 function heuristic(row1, col1, row2, col2) {
-    return Math.abs(row1 - row2) + Math.abs(col1 - col2);
+    // With teleportation, use a more conservative heuristic
+    // Check if current position is a black hole - if so, heuristic should account for potential shortcuts
+    const isBlackHole = BLACK_HOLES.some(bh => bh.row === row1 && bh.col === col1);
+
+    if (isBlackHole) {
+        // For black holes, use 0 heuristic to ensure we explore teleportation options
+        return 0;
+    }
+
+    // Check distance to nearest black hole vs direct distance
+    let minDistToBlackHole = Infinity;
+    let minDistFromBlackHolePair = Infinity;
+
+    for (const bh of BLACK_HOLES) {
+        const distToHole = Math.abs(row1 - bh.row) + Math.abs(col1 - bh.col);
+        const distFromPair = Math.abs(bh.linkedTo.row - row2) + Math.abs(bh.linkedTo.col - col2);
+        const totalViaTeleport = distToHole + 1 + distFromPair; // +1 for teleport
+
+        if (totalViaTeleport < minDistFromBlackHolePair) {
+            minDistFromBlackHolePair = totalViaTeleport;
+        }
+    }
+
+    const directDist = Math.abs(row1 - row2) + Math.abs(col1 - col2);
+
+    // Use the minimum of direct distance and teleport distance as heuristic
+    return Math.min(directDist, minDistFromBlackHolePair);
 }
 
 // ===== Get Valid Neighbors =====
@@ -567,26 +729,30 @@ function getNeighbors(row, col) {
 
 // ===== Reconstruct Path =====
 function reconstructPath(cameFrom, current) {
-    const path = [];
+    const nodes = [];
     let currentKey = `${current.row},${current.col}`;
 
+    // Collect nodes with their teleport flags
+    // The isTeleport flag in cameFrom indicates the move TO that node was a teleport
     while (cameFrom.has(currentKey)) {
-        const prev = cameFrom.get(currentKey);
-        currentKey = `${prev.row},${prev.col}`;
-        path.unshift({ 
-            row: prev.row, 
-            col: prev.col,
-            isTeleport: prev.isTeleport 
+        const cameFromEntry = cameFrom.get(currentKey);
+        // Add current node with the teleport flag from its cameFrom entry
+        nodes.unshift({
+            row: current.row,
+            col: current.col,
+            isTeleport: cameFromEntry.isTeleport || false
         });
+        current = {row: cameFromEntry.row, col: cameFromEntry.col};
+        currentKey = `${current.row},${current.col}`;
     }
 
+    // Add the start node (no teleport to reach it from previous)
+    nodes.unshift({ row: current.row, col: current.col, isTeleport: false });
+
     // Remove the starting position
-    path.shift();
+    nodes.shift();
 
-    // Add the final position
-    path.push({ row: current.row, col: current.col, isTeleport: false });
-
-    return path;
+    return nodes;
 }
 
 // ===== Process Movement Queue =====
@@ -647,6 +813,8 @@ function clearPathPreview() {
 function moveCharacter(newRow, newCol) {
     return new Promise((resolve) => {
         gameState.characterPos = { row: newRow, col: newCol };
+        gameState.stepCount++;
+        updateStepCount();
         positionCharacter();
 
         setTimeout(() => {
@@ -763,12 +931,14 @@ async function teleportThroughBlackHole(blackHole) {
     
     // Wait for animation
     await new Promise(resolve => setTimeout(resolve, 600));
-    
+
     // Move character to linked position
-    gameState.characterPos = { 
-        row: blackHole.linkedTo.row, 
-        col: blackHole.linkedTo.col 
+    gameState.characterPos = {
+        row: blackHole.linkedTo.row,
+        col: blackHole.linkedTo.col
     };
+    gameState.stepCount++;
+    updateStepCount();
     positionCharacter();
     
     // Create visual effect at exit
@@ -875,6 +1045,17 @@ function updateDiscoveredCount() {
         // Do not auto-show congratulations
         // User must reach the end goal to complete the game
     }
+}
+
+// ===== Update Step Count =====
+function updateStepCount() {
+    stepCountElement.textContent = gameState.stepCount;
+
+    // Add pop animation
+    stepCountElement.classList.add('updated');
+    setTimeout(() => {
+        stepCountElement.classList.remove('updated');
+    }, 300);
 }
 
 // ===== Highlight Special Cells =====
@@ -997,11 +1178,213 @@ function getCellPosition(row, col) {
     };
 }
 
+// ===== Show AI Warning Notification =====
+function showAIWarning() {
+    // Remove any existing warning
+    const existing = document.querySelector('.ai-warning-toast');
+    if (existing) {
+        existing.remove();
+    }
+
+    // Create notification
+    const toast = document.createElement('div');
+    toast.className = 'ai-warning-toast';
+    toast.innerHTML = `
+        <i class="fas fa-brain"></i>
+        <span>One step at a time. Enable AI mode to move multiple steps!</span>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // Remove after animation
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
+
+    // Make AI button pulse to draw attention
+    aiToggleBtn.classList.add('pulse-attention');
+    setTimeout(() => {
+        aiToggleBtn.classList.remove('pulse-attention');
+    }, 1000);
+}
+
+// ===== Tutorial Functions =====
+function showTutorial() {
+    tutorialOverlay.style.display = 'block';
+    tutorialState.currentStep = 1;
+    updateTutorialDisplay();
+}
+
+function closeTutorial() {
+    tutorialOverlay.style.display = 'none';
+    // Clear spotlight
+    tutorialSpotlight.style.boxShadow = '';
+}
+
+function nextTutorialStep() {
+    if (tutorialState.currentStep < tutorialState.totalSteps) {
+        tutorialState.currentStep++;
+        updateTutorialDisplay();
+    } else {
+        // Last step - close tutorial
+        closeTutorial();
+    }
+}
+
+function previousTutorialStep() {
+    if (tutorialState.currentStep > 1) {
+        tutorialState.currentStep--;
+        updateTutorialDisplay();
+    }
+}
+
+function goToTutorialStep(step) {
+    if (step >= 1 && step <= tutorialState.totalSteps) {
+        tutorialState.currentStep = step;
+        updateTutorialDisplay();
+    }
+}
+
+function updateTutorialDisplay() {
+    const currentStepIndex = tutorialState.currentStep - 1;
+    const stepData = tutorialSteps[currentStepIndex];
+
+    // Update text content
+    tutorialStepNumber.textContent = tutorialState.currentStep;
+    tutorialTitle.textContent = stepData.title;
+    tutorialDescription.textContent = stepData.description;
+    tutorialTipElement.textContent = stepData.tip;
+
+    // Update dots
+    tutorialDots.forEach((dot, index) => {
+        if (index === currentStepIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+
+    // Update buttons
+    if (tutorialState.currentStep === 1) {
+        tutorialPrevBtn.style.visibility = 'hidden';
+    } else {
+        tutorialPrevBtn.style.visibility = 'visible';
+    }
+
+    if (tutorialState.currentStep === tutorialState.totalSteps) {
+        tutorialNextBtn.innerHTML = '<i class="fas fa-play"></i>';
+    } else {
+        tutorialNextBtn.innerHTML = '<i class="fas fa-arrow-right"></i>';
+    }
+
+    // Position callout and create spotlight
+    positionTutorialCallout(stepData);
+}
+
+function positionTutorialCallout(stepData) {
+    const targetElement = document.querySelector(stepData.highlightElement);
+
+    if (!targetElement) {
+        console.warn('Tutorial target element not found:', stepData.highlightElement);
+        return;
+    }
+
+    const targetRect = targetElement.getBoundingClientRect();
+    const calloutRect = tutorialCallout.getBoundingClientRect();
+
+    // Create spotlight effect (cut-out around element)
+    const spotlightSize = 20; // padding around element
+    tutorialSpotlight.style.boxShadow = `
+        0 0 0 9999px rgba(0, 0, 0, 0.7),
+        inset 0 0 ${spotlightSize}px rgba(0, 0, 0, 0.3)
+    `;
+    tutorialSpotlight.style.top = `${targetRect.top - spotlightSize}px`;
+    tutorialSpotlight.style.left = `${targetRect.left - spotlightSize}px`;
+    tutorialSpotlight.style.width = `${targetRect.width + spotlightSize * 2}px`;
+    tutorialSpotlight.style.height = `${targetRect.height + spotlightSize * 2}px`;
+    tutorialSpotlight.style.borderRadius = '12px';
+
+    // Position callout based on position preference
+    let calloutTop, calloutLeft;
+    let pointerTop, pointerLeft, pointerClass;
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    if (stepData.calloutPosition === 'center') {
+        // Center on screen
+        calloutTop = (viewportHeight - calloutRect.height) / 2;
+        calloutLeft = (viewportWidth - calloutRect.width) / 2;
+        tutorialPointer.style.display = 'none';
+    } else if (stepData.calloutPosition === 'left') {
+        // Position to the left of target
+        calloutTop = targetRect.top + (targetRect.height / 2) - (calloutRect.height / 2);
+        calloutLeft = targetRect.left - calloutRect.width - 40;
+
+        // Pointer on the right side of callout
+        pointerTop = targetRect.top + (targetRect.height / 2) - 15;
+        pointerLeft = targetRect.left - 40;
+        pointerClass = 'arrow-right';
+        tutorialPointer.style.display = 'block';
+    } else if (stepData.calloutPosition === 'right') {
+        // Position to the right of target
+        calloutTop = targetRect.top + (targetRect.height / 2) - (calloutRect.height / 2);
+        calloutLeft = targetRect.right + 40;
+
+        // Pointer on the left side of callout
+        pointerTop = targetRect.top + (targetRect.height / 2) - 15;
+        pointerLeft = targetRect.right + 10;
+        pointerClass = 'arrow-left';
+        tutorialPointer.style.display = 'block';
+    }
+
+    // Ensure callout stays within viewport
+    calloutTop = Math.max(20, Math.min(calloutTop, viewportHeight - calloutRect.height - 20));
+    calloutLeft = Math.max(20, Math.min(calloutLeft, viewportWidth - calloutRect.width - 20));
+
+    // Apply positions
+    tutorialCallout.style.top = `${calloutTop}px`;
+    tutorialCallout.style.left = `${calloutLeft}px`;
+
+    if (tutorialPointer.style.display !== 'none') {
+        tutorialPointer.className = 'tutorial-pointer ' + pointerClass;
+        tutorialPointer.style.top = `${pointerTop}px`;
+        tutorialPointer.style.left = `${pointerLeft}px`;
+    }
+}
+
+// ===== Toggle AI Pathfinding =====
+function toggleAIPathfinding() {
+    gameState.aiPathfindingEnabled = !gameState.aiPathfindingEnabled;
+
+    // Get tooltip elements
+    const tooltipStatus = aiToggleBtn.querySelector('.ai-tooltip-status');
+    const tooltipDesc = aiToggleBtn.querySelector('.ai-tooltip-desc');
+
+    // Update button appearance
+    if (gameState.aiPathfindingEnabled) {
+        aiToggleBtn.classList.add('active');
+        tooltipStatus.textContent = 'ON - AI Mode';
+        tooltipDesc.textContent = 'Click anywhere to navigate';
+        console.log('AI Pathfinding: ENABLED - Click anywhere to use A* pathfinding');
+    } else {
+        aiToggleBtn.classList.remove('active');
+        tooltipStatus.textContent = 'OFF - Manual Mode';
+        tooltipDesc.textContent = 'Click to enable auto-navigation';
+        console.log('AI Pathfinding: DISABLED - Click adjacent cells only');
+    }
+}
+
 // ===== Debug Function =====
 function debugMaze() {
     console.log('Character Position:', gameState.characterPos);
     console.log('Hotspots:', HOTSPOTS);
     console.log('Discovered:', gameState.discoveredCount);
+    console.log('AI Pathfinding:', gameState.aiPathfindingEnabled);
 }
 
 // Make debug function available globally
