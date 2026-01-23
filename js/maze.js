@@ -791,7 +791,7 @@ function showCongratulations() {
                 <a href="index.html" class="start-btn" style="font-size: 0.95rem; padding: 0.75rem 1.5rem;">
                     <i class="fas fa-home"></i> Traditional View
                 </a>
-                <a href="Hoang_Van_An_CV_0210.pdf" download class="start-btn" style="background: linear-gradient(135deg, #10b981, #059669); text-decoration: none; font-size: 0.95rem; padding: 0.75rem 1.5rem;">
+                <a href="assets/documents/Van_An_Hoang_2026.pdf" download class="start-btn" style="background: linear-gradient(135deg, #10b981, #059669); text-decoration: none; font-size: 0.95rem; padding: 0.75rem 1.5rem;">
                     <i class="fas fa-download"></i> Download CV
                 </a>
             </div>

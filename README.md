@@ -70,7 +70,7 @@ personal-web/
 ├── simplexmethod.html     # Blog post on Simplex Method
 ├── assets/
 │   ├── documents/         # CV and other documents
-│   │   └── Hoang_Van_An_CV_0210.pdf
+│   │   └── Van_An_Hoang_2026.pdf
 │   └── images/           # Portfolio images and icons
 │       ├── avatar.png
 │       ├── favicon.png
@@ -275,6 +275,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 Made with ❤️ by Van-An Hoang
 
-[View Portfolio](https://ethanhoangg.github.io) • [Download CV](assets/documents/Hoang_Van_An_CV_0210.pdf) • [Connect on LinkedIn](https://linkedin.com/in/van-an-hoang)
+[View Portfolio](https://ethanhoangg.github.io) • [Download CV](assets/documents/Van_An_Hoang_2026.pdf) • [Connect on LinkedIn](https://linkedin.com/in/van-an-hoang)
 
 </div>
