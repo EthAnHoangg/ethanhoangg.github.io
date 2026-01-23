@@ -8,7 +8,7 @@
     "location": "Sydney, NSW, Australia",
     "linkedin": "https://linkedin.com/in/van-an-hoang",
     "github": "https://github.com/EthAnHoangg",
-    "cv": "assets/documents/Hoang_Van_An_CV_0210.pdf",
+    "cv": "assets/documents/Van_An_Hoang_2026.pdf",
     "portrait": "assets/images/portrait.jpeg"
   },
   "about": {
@@ -36,10 +36,10 @@
   },
   "experience": [
     {
-      "title": "Junior/Middle AI Research Engineer",
+      "title": "Junior/Intermediate AI Research Engineer",
       "company": "Pixta - Largest marketplace online site of stock media in Asia",
       "location": "Hanoi, Vietnam",
-      "period": "Oct 2023 - Aug 2024",
+      "period": "Oct 2023 - Aug 2025",
       "responsibilities": [
         "<strong>AutoReview Project:</strong> Engineered unified MLOps pipeline using ClearML, integrating AWS S3, DynamoDB, MySQL, and BigQuery for streamlined data processing",
         "Evaluated and integrated multiple Vision-Language Models (MiniCPM-V 2.6, Qwen2-VL, Gemini 2.0/2.5) for abstract image understanding and trademark recognition",
@@ -84,7 +84,7 @@
       "institutionShort": "UTS",
       "location": "Sydney, NSW, Australia",
       "period": "Aug 2025 - Present",
-      "gpa": null,
+      "gpa": "6.8/7 (rounded)",
       "details": [
         "<strong>UTS Academic Excellence International Scholarship</strong> - Awarded for outstanding academic achievement",
         "Focusing on advanced machine learning, deep learning architectures, and cutting-edge AI research in generative models and computer vision"
@@ -176,18 +176,32 @@
   ],
   "projects": [
     {
-      "title": "VisionCraft AI",
-      "icon": "fas fa-wand-magic-sparkles",
-      "description": "LLM-powered system for deep review, compliance checks, and market analysis of stock media. Features batch processing, SEO optimization, RAG chatbot, and integrated image generation capabilities (Style Transfer, Text-to-Image, Image-to-Image, Inpainting).",
+      "title": "Stokkie - AI-Powered Stock Photography Toolkit",
+      "icon": "fas fa-camera-retro",
+      "description": "Full-stack AI productivity platform for stock contributors using React 19, TypeScript, Firebase, and Google Gemini/Imagen APIs. Features node-based Canvas workflow system, multi-modal AI capabilities, and privacy-first RAG chatbot.",
       "detailedPoints": [
-        "Developed Large Language Model (LLM)-powered system for comprehensive review and market analysis",
-        "Implemented batch processing functionality for efficient content handling and workflow automation",
-        "Integrated Image Generation capabilities including Style Transfer, Text-to-Image, Image-to-Image, and Inpainting",
-        "Built Retrieval-Augmented Generation (RAG) chatbot for intelligent content assistance",
-        "Significantly streamlined content preparation and compliance verification processes"
+        "Built a full-stack AI productivity platform for stock contributors using React 19, TypeScript, Firebase, and Google Gemini/Imagen APIs with secure serverless architecture",
+        "Designed a node-based Canvas workflow system for visual image pipelines, supporting AI generation, enhancement, inpainting, batch analysis, and multi-image operations",
+        "Implemented multi-modal AI features: professional image critique, SEO metadata generation, compliance analysis (model/property release detection, content safety), and text-to-image generation",
+        "Developed a privacy-first RAG chatbot with in-browser vector search and image context support for contributor guidance"
       ],
-      "techStack": ["LLM", "RAG", "Image Generation", "SEO"],
-      "link": "https://github.com/EthAnHoangg"
+      "techStack": ["React 19", "TypeScript", "Firebase", "Gemini AI", "RAG"],
+      "link": "https://github.com/EthAnHoangg",
+      "duration": "Oct 2025 - Present"
+    },
+    {
+      "title": "Gaither - Autonomous Recruiting Agent Swarm",
+      "icon": "fas fa-users-cog",
+      "description": "Multi-agent AI recruiting platform using Python, FastAPI, React 19/Next.js 16, and Claude AI. Features 3-agent pipeline with real-time WebSocket streaming, Weaviate vector database, and AI chatbot for candidate queries.",
+      "detailedPoints": [
+        "Built a multi-agent AI recruiting platform using Python, FastAPI, React 19/Next.js 16, and Claude AI with real-time WebSocket streaming for live agent activity visualization",
+        "Architected a 3-agent pipeline (Hunter, Analyzer, Engager) that autonomously discovers GitHub candidates, evaluates code quality with LLM-powered scoring, and generates personalized outreach messages",
+        "Integrated Weaviate vector database for semantic candidate search",
+        "Developed an AI chatbot with grounding tools enabling recruiters to query candidate data, compare profiles, analyze GitHub activity, and generate interview questions with real-time web search"
+      ],
+      "techStack": ["Python", "FastAPI", "React 19", "Claude AI", "Weaviate"],
+      "link": "https://github.com/EthAnHoangg",
+      "duration": "Dec 2025"
     },
     {
       "title": "Efficient Training Diffusion Models",
@@ -200,7 +214,8 @@
         "Detailed empirical results demonstrating effectiveness of the approach"
       ],
       "techStack": ["PyTorch", "Diffusion Models", "Deep Learning"],
-      "link": "https://github.com/HoangAnAIRS/exponential-SNR-diffusion"
+      "link": "https://github.com/HoangAnAIRS/exponential-SNR-diffusion",
+      "duration": "March 2024 - July 2024"
     },
     {
       "title": "Rain Removal Analysis",
@@ -217,18 +232,18 @@
       "duration": "Oct 2022 - Jan 2023"
     },
     {
-      "title": "2048 Game",
-      "icon": "fas fa-gamepad",
-      "description": "Interactive 2048 puzzle game featuring AI opponent powered by Minimax algorithm. Developed comprehensive UI design and implemented AI game-playing logic enabling the AI to play and win the game autonomously.",
+      "title": "Document Summarization",
+      "icon": "fas fa-file-alt",
+      "description": "Document summarization using deep learning. Implemented Seq2Seq RNN with PyTorch and fine-tuned Google MT5-small on CNN/DailyMail dataset achieving competitive Rouge scores.",
       "detailedPoints": [
-        "Designed and implemented responsive, intuitive user interface for enhanced gaming experience",
-        "Developed Minimax algorithm with alpha-beta pruning for intelligent AI opponent",
-        "Implemented AI decision-making logic enabling autonomous gameplay and game winning strategies",
-        "Optimized algorithm performance for smooth real-time game interactions",
-        "Created engaging visual design with interactive controls and game state visualization"
+        "Implemented Sequence to Sequence (Seq2Seq) RNN with PyTorch",
+        "Fine-tuned Google MT5-small on processed CNN/DailyMail dataset",
+        "Achieved Rouge-1: 28.102, Rouge-2: 13.426, Rouge-L: 24.824 (comparable to GPT-2)",
+        "Outperformed implemented Seq2Seq model baseline"
       ],
-      "techStack": ["Game Development", "Minimax Algorithm", "AI Algorithm", "UI/UX Design", "Interactive UI"],
-      "link": "https://github.com/hlongng2002241/2048"
+      "techStack": ["PyTorch", "NLP", "Seq2Seq", "Transformers"],
+      "link": "https://github.com/EthAnHoangg",
+      "duration": "Dec 2022 - Jan 2023"
     }
   ],
   "references": [
